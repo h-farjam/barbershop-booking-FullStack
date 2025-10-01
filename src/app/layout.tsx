@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Vazirmatn } from "next/font/google";
 import "./globals.css";
+import Navbar from "./Components/Navbar";
 
 const vazirmatn = Vazirmatn({
   subsets: ["latin", "arabic"],
@@ -18,7 +19,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html dir="rtl" lang="fa">
-      <body className={`${vazirmatn.className} antialiased`}>{children}</body>
+      <body className={`${vazirmatn.className} antialiased`}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
