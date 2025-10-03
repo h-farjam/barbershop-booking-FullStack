@@ -1,12 +1,9 @@
-import Navbar from "./Components/Navbar";
+import HeroSection1 from "./Components/HeroSection1";
 
 export default function Home() {
   return (
-    <main className="relative h-screen  flex bg-[url('/e800beba25f9d210776ddc693ba4ac8a00852ba0.jpg')] bg-center bg-cover">
-      <Navbar />
-      <section className="flex-1 flex justify-center items-center">
-        Hero Content
-      </section>
+    <main className=" h-screen flex flex-col justify-around items-start  bg-[url('/vecteezy_modern-barbershop-interior-with-mirrors-chair-and-other_26579361.jpg')] bg-cover bg-no-repeat ">
+      <HeroSection1 />
     </main>
   );
 }
