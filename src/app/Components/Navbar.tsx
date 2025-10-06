@@ -7,7 +7,9 @@ function Navbar() {
   return (
     <nav className=" absolute w-full flex justify-between items-center p-4">
       <div className="flex justify-center items-center">
-        <svg
+        <img className="scale-90" src="/icon scissors.png" alt="" />
+        <p className="font-bold text-[#f8cc7f]">Amir Mohammad</p>
+        {/* <svg
           width="205"
           height="90"
           viewBox="0 0 208 94"
@@ -57,7 +59,7 @@ function Navbar() {
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-        </svg>
+        </svg> */}
       </div>
 
       <div className="text-white border-l shadow border-t flex justify-center items-center  backdrop-blur-xl p-4 rounded-3xl font-semibold">

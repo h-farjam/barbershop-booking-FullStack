@@ -18,7 +18,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html dir="rtl" lang="fa">
+    <html className="w-full" dir="rtl" lang="fa">
       <body className={`${vazirmatn.className} antialiased`}>
         <Navbar />
         {children}
