@@ -11,7 +11,10 @@ export default function HeroSection2() {
         <p>Book My Barber</p>
         <p>Book My Barber</p>
         <p>Book My Barber</p>
-        <p>Book My Barber</p>
+        <p className="flex items-center gap-1">
+          <img className="w-5 h-8" src="/icon scissors.png" alt="" />
+          Book My Barber
+        </p>
         <p>Book My Barber</p>
         <p>Book My Barber</p>
         <p>Book My Barber</p>
