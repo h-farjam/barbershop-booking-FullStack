@@ -20,7 +20,7 @@ function HeroSection1() {
           یک داستان از دقت ، استایل و اعتماد
         </h2>
       </div>
-{/* ---------------------------------------------------------------------------------------------- */}
+      {/* ---------------------------------------------------------------------------------------------- */}
       <div className="flex px-4 justify-start items-center gap-10 ">
         <button
           className=" font-bold
@@ -35,7 +35,7 @@ function HeroSection1() {
           </Link>
         </span>
       </div>
-{/* ---------------------------------------------------------------------------------------------------- */}
+      {/* ---------------------------------------------------------------------------------------------------- */}
       <div className="self-center border-0  flex backdrop-blur-3xl overflow-hidden rounded-3xl justify-center items-center">
         <div className="w-[900px]  flex justify-around items-center text-4xl h-[200px] border rounded-3xl">
           <div className="flex flex-col gap-3">
@@ -68,7 +68,6 @@ function HeroSection1() {
               <span>از 12:00 ظهر</span>
               <span>الی 22:00</span>
             </p>
-            
           </div>
         </div>
       </div>

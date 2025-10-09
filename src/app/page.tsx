@@ -1,6 +1,8 @@
+import Comment from "./Components/Comment";
 import HeroSection1 from "./Components/HeroSection1";
 import HeroSection2 from "./Components/HeroSection2";
 import HeroSection3 from "./Components/HeroSection3";
+import HeroSection4 from "./Components/HeroSection4";
 
 export default function Home() {
   return (
@@ -8,6 +10,8 @@ export default function Home() {
       <HeroSection1 />
       <HeroSection2/>
       <HeroSection3/>
+      <HeroSection4/>
+      <Comment/>
     </main>
   );
 }
