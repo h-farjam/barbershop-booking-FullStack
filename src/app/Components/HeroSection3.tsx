@@ -2,88 +2,70 @@ import Link from "next/link";
 import React from "react";
 
 export default function HeroSection3() {
+  const services = [
+    {
+      img: "/Image icon-Cutter.png",
+      title: "کوتاهی مو",
+      desc: "کوتاهی مو با جدید ترین متد های روز دنیا | فید حرفه ای و مدل های مدرن مردانه مناسب استایل شما",
+      price: "200 هزارتومان",
+    },
+    {
+      img: "/Image icon.png",
+      title: "فید",
+      desc: "انواع فید(low, Mid , high) با دقت بالا وخطوط تمیز | استایلی مدرت و شیک برای هر سلیقه",
+      price: "60 هزارتومان",
+    },
+    {
+      img: "/Image iconnn (1).png",
+      title: "مراقبت پوستی",
+      desc: "مراقبت پوستی | پاکسازی + آبرسانی با پکیچ های حرفه ای",
+      price: "500هزارتومان",
+    },
+    {
+      img: "/Image iconrish (1).png",
+      title: "اصلاح ریش و صورت",
+      desc: "از اصلاح کلاسیک تا مدل های مدرن ریش | تجربه های متفاوت از تمیزی، دقت و استایل مردانه",
+      price: "200هزارتومان",
+    },
+    {
+      img: "/hair-curler-icon-3684901-512 1.png",
+      title: "فر و کراتین",
+      desc: "احیا و صاف کردن مو با | موهایی جذاب و خوش حالت با فر ماندگار",
+      price: "قیمت با توجه به حجم",
+    },
+    {
+      img: "/groom_8044709 1.png",
+      title: "داماد",
+      desc: "پکیج دامادی VIP | استایل های خاص برای روز خاص شما",
+      price: "3 ملیون تومان",
+    },
+  ];
+
   return (
-    <>
-      <section className=" bg-[#F8F5EF] py-4 flex justify-center gap-10 items-center flex-col w-full">
-        <h1 className="font-bold text-center text-4xl">خدمات</h1>
-        <div className="border-none rounded-[20px] py-10 px-10 shadow-2xl grid md:grid-cols-2 gap-15 grid-cols-1  md:w-2/3 w-full">
-          <div className="flex justify-center items-start gap-3">
-            <img src="/Image icon-Cutter.png" alt="" />
-            <div className="text-justify flex flex-col gap-1">
-              <p className="font-bold text-2xl">کوتاهی مو</p>
-              <p>
-                کوتاهی مو با جدید ترین متد های روز دنیا | فید حرفه ای و مدل های
-                مدرن مردانه مناسب استایل شما{" "}
-              </p>
-              <hr />
-              <p className="font-bold text-[#dba952]">200 هزارتومان</p>
+    <section className="bg-[#F8F5EF] py-10 px-4 flex flex-col items-center w-full">
+      <h1 className="font-bold text-center text-3xl md:text-4xl mb-8">خدمات</h1>
+      <div className="rounded-[20px] py-8 px-6 shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-6xl">
+        {services.map((item, index) => (
+          <div key={index} className="flex flex-col sm:flex-row items-start gap-4">
+            <img src={item.img} alt={item.title} className="w-16 h-16 object-contain" />
+            <div className="text-justify flex w-full flex-col gap-2">
+              <p className="font-bold text-xl sm:text-2xl">{item.title}</p>
+              <p className="text-sm sm:text-base">{item.desc}</p>
+              <div className="flex w-full justify-center">
+                <hr className="w-full border-t-2 border-[#dba952]" />
+              </div>
+              <p className="font-bold text-[#dba952]">{item.price}</p>
             </div>
           </div>
-          <div className="flex justify-center items-start gap-3">
-            <img src="/Image icon.png" alt="" />
-            <div className="text-justify flex flex-col gap-1">
-              <p className="font-bold text-2xl">فید</p>
-              <p>
-                انواع فید(low, Mid , high) با دقت بالا وخطوط تمیز | استایلی مدرت
-                و شیک برای هر سلیقه{" "}
-              </p>
-              <hr />
-              <p className="font-bold text-[#dba952]">60 هزارتومان</p>
-            </div>
-          </div>
-          <div className="flex justify-center items-start gap-3">
-            <img src="/Image iconnn (1).png" alt="" />
-            <div className="text-justify flex flex-col gap-3">
-              <p className="font-bold text-2xl">مراقبت پوستی</p>
-              <p>مراقبت پوستی | پاکسازی + آبرسانی با پکیچ های حرفه ای</p>
-              <hr />
-              <p className="font-bold text-[#dba952]">500هزارتومان</p>
-            </div>
-          </div>
-          <div className="flex justify-center items-start gap-3">
-            <img src="/Image iconrish (1).png" alt="" />
-            <div className="text-justify flex flex-col gap-1">
-              <p className="font-bold text-2xl">اصلاح ریش و صورت </p>
-              <p>
-                از اصلاح کلاسیک تا مدل های مدرن ریش | تجربه های متفاوت از تمیزی،
-                دقت و استایل مردانه{" "}
-              </p>
-              <hr />
-              <p className="font-bold text-[#dba952]">200هزارتومان</p>
-            </div>
-          </div>
-          <div className="flex justify-center items-start gap-3">
-            <img src="/hair-curler-icon-3684901-512 1.png" alt="" />
-            <div className="text-justify flex flex-col gap-1">
-              <p className="font-bold text-2xl">فر و کراتین </p>
-              <p>
-                احیا و صاف کردن مو با | موهایی جذاب و خوش حالت با فر ماندگار
-              </p>
-              <hr />
-              <p className="font-bold text-[#dba952]">قیمت با توجه به حجم</p>
-            </div>
-          </div>
-          <div className="flex justify-center items-start gap-3">
-            <img src="/groom_8044709 1.png" alt="" />
-            <div className="text-justify flex flex-col gap-1">
-              <p className="font-bold text-2xl">داماد</p>
-              <p>پکیج دامادی VIP | استایل های خاص برای روز خاص شما </p>
-              <hr />
-              <p className="font-bold text-[#dba952]">3 ملیون تومان </p>
-            </div>
-          </div>
-          <div className="col-span-1  md:col-span-2 flex items-center justify-center">
-            <Link className="" href={"/"}>
-              <button
-                className=" font-bold
-         px-3 py-1 w-[184px] h-[48px] rounded-4xl cursor-pointer bg-[#f8cc7f]"
-              >
-                رزرو نوبت
-              </button>
-            </Link>
-          </div>
+        ))}
+        <div className="col-span-1 md:col-span-2 flex justify-center mt-4">
+          <Link href={"/"}>
+            <button className="font-bold px-6 py-2 w-[184px] h-[48px] rounded-full bg-[#f8cc7f]">
+              رزرو نوبت
+            </button>
+          </Link>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

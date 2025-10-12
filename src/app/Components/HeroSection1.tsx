@@ -2,70 +2,73 @@ import React from "react";
 import Link from "next/link";
 import { BiLogoTelegram } from "react-icons/bi";
 import { LuPhoneCall } from "react-icons/lu";
-import { CiLocationOn } from "react-icons/ci";
-import { CiTimer } from "react-icons/ci";
+import { CiLocationOn, CiTimer } from "react-icons/ci";
 
 function HeroSection1() {
   return (
-    <section className="flex flex-col  w-full h-screen pr-3  gap-10   mt-35">
-      <div>
-        <h2 className="text-4xl px-4 flex text-white font-bold">
-          <span className="text-[#f8cc7f]">هنر کات ، </span> در دست ماست __ هر
-          حرکت قیچی{" "}
+    <section className="flex flex-col w-full min-h-screen px-4 py-10 gap-10 md:gap-16 mt-10 md:mt-20 text-white">
+      {/* ---------------------- عنوان اصلی ---------------------- */}
+      <div className="text-center md:text-right">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-relaxed">
+          <span className="text-[#f8cc7f]">هنر کات، </span>
+          در دست ماست __ هر حرکت قیچی
         </h2>
-        <br />
-
-        <h2 className="text-4xl flex px-4 text-white font-bold">
-          {" "}
-          یک داستان از دقت ، استایل و اعتماد
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-relaxed mt-2">
+          یک داستان از دقت، استایل و اعتماد
         </h2>
       </div>
-      {/* ---------------------------------------------------------------------------------------------- */}
-      <div className="flex px-4 justify-start items-center gap-10 ">
-        <button
-          className=" font-bold
-         px-3 py-1 w-[184px] h-[48px] rounded-4xl cursor-pointer bg-[#f8cc7f]"
-        >
+
+      {/* ---------------------- دکمه و تلگرام ---------------------- */}
+      <div className="flex flex-wrap justify-center md:justify-start items-center gap-6">
+        <button className="font-bold w-[160px] sm:w-[180px] h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
           رزرو نوبت
         </button>
-        <p className="text-3xl text-[#f8cc7f]">Story</p>
-        <span className="border p-2 text-[#f8cc7f] rounded-full">
+        <p className="text-2xl sm:text-3xl text-[#f8cc7f]">Story</p>
+        <span className="border border-[#f8cc7f] p-2 rounded-full hover:bg-[#f8cc7f]/20 transition">
           <Link href={"/"}>
-            <BiLogoTelegram size={"25px"} />
+            <BiLogoTelegram size={"25px"} className="text-[#f8cc7f]" />
           </Link>
         </span>
       </div>
-      {/* ---------------------------------------------------------------------------------------------------- */}
-      <div className="self-center border-0  flex backdrop-blur-3xl overflow-hidden rounded-3xl justify-center items-center">
-        <div className="w-[900px]  flex justify-around items-center text-4xl h-[200px] border rounded-3xl">
-          <div className="flex flex-col gap-3">
-            <div className="flex justify-around gap-15">
-              <p className="font-bold text-2xl">تماس</p>
-              <LuPhoneCall className="text-2xl" />
+
+      {/* ---------------------- بخش اطلاعات تماس ---------------------- */}
+      <div className="self-center w-full sm:w-[90%] md:w-[800px] lg:w-[900px] bg-transparent border border-gray-700/40 rounded-3xl backdrop-blur-2xl p-6 shadow-xl">
+        <div className="flex flex-col md:flex-row justify-around items-center gap-8 text-lg sm:text-xl md:text-2xl font-medium">
+          {/* تماس */}
+          <div className="flex flex-col gap-3 text-center">
+            <div className="flex justify-center items-center gap-3">
+              <p className="font-bold text-xl md:text-2xl">تماس</p>
+              <LuPhoneCall className="text-xl md:text-2xl text-[#f8cc7f]" />
             </div>
-            <hr />
-            <p className="text-[20px] text-center">09012352548</p>
-            <p className="text-[20px] text-center">09210658494</p>
+            <hr className="border-gray-500 w-2/3 mx-auto" />
+            <p className="text-sm sm:text-base md:text-lg">09012352548</p>
+            <p className="text-sm sm:text-base md:text-lg">09210658494</p>
           </div>
-          <div className="flex flex-col gap-3">
-            <div className="flex justify-around">
-              <p className="font-bold text-2xl">آدرس</p>
-              <CiLocationOn className="text-2xl" />
+
+          {/* آدرس */}
+          <div className="flex flex-col gap-3 text-center">
+            <div className="flex justify-center items-center gap-3">
+              <p className="font-bold text-xl md:text-2xl">آدرس</p>
+              <CiLocationOn className="text-xl md:text-2xl text-[#f8cc7f]" />
             </div>
-            <hr />
-            <p className="text-[20px] text-center flex gap-2 flex-col">
-              <span>شاهرود خیابان مصلا ،</span>
-              <span>پایین تر از مسجد جوادالائمه</span>
+            <hr className="border-gray-500 w-2/3 mx-auto" />
+            <p className="text-sm sm:text-base md:text-lg leading-relaxed">
+              <span>شاهرود، خیابان مصلا،</span>
+              <br />
+              <span>پایین‌تر از مسجد جوادالائمه</span>
             </p>
           </div>
-          <div className="flex flex-col gap-3">
-            <div className="flex justify-around gap-6 items-center">
-              <p className="font-bold text-2xl">ساعت کاری</p>
-              <CiTimer className="text-2xl" />
+
+          {/* ساعت کاری */}
+          <div className="flex flex-col gap-3 text-center">
+            <div className="flex justify-center items-center gap-3">
+              <p className="font-bold text-xl md:text-2xl">ساعت کاری</p>
+              <CiTimer className="text-xl md:text-2xl text-[#f8cc7f]" />
             </div>
-            <hr />
-            <p className="text-[20px] text-center flex flex-col gap-2">
+            <hr className="border-gray-500 w-2/3 mx-auto" />
+            <p className="text-sm sm:text-base md:text-lg leading-relaxed">
               <span>از 12:00 ظهر</span>
+              <br />
               <span>الی 22:00</span>
             </p>
           </div>
