@@ -46,8 +46,15 @@ export default function HeroSection3() {
       <h1 className="font-bold text-center text-3xl md:text-4xl mb-8">خدمات</h1>
       <div className="rounded-[20px] py-8 px-6 shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-6xl">
         {services.map((item, index) => (
-          <div key={index} className="flex flex-col sm:flex-row items-start gap-4">
-            <img src={item.img} alt={item.title} className="w-16 h-16 object-contain" />
+          <div
+            key={index}
+            className="flex flex-col sm:flex-row items-start gap-4"
+          >
+            <img
+              src={item.img}
+              alt={item.title}
+              className="w-16 h-16 object-contain"
+            />
             <div className="text-justify flex w-full flex-col gap-2">
               <p className="font-bold text-xl sm:text-2xl">{item.title}</p>
               <p className="text-sm sm:text-base">{item.desc}</p>
@@ -59,8 +66,9 @@ export default function HeroSection3() {
           </div>
         ))}
         <div className="col-span-1 md:col-span-2 flex justify-center mt-4">
-          <Link href={"/"}>
-            <button className="font-bold px-6 py-2 w-[184px] h-[48px] rounded-full bg-[#f8cc7f]">
+          <Link href={"services"}>
+            {" "}
+            <button className="font-bold cursor-pointer w-[160px] sm:w-[180px] h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
               رزرو نوبت
             </button>
           </Link>

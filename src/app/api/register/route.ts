@@ -73,7 +73,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const newUser = await User.create({ Fname, Lname, phone });
 
     return NextResponse.json(
-      { message: "ثبت‌نام موفق بود", user: newUser },
+      { message: "ثبت‌ نام موفق بود", user: newUser },
       { status: 201 }
     );
   } catch (error) {

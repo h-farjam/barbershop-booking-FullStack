@@ -20,9 +20,12 @@ function HeroSection1() {
 
       {/* ---------------------- دکمه و تلگرام ---------------------- */}
       <div className="flex flex-wrap justify-center md:justify-start items-center gap-6">
-        <button className="font-bold w-[160px] sm:w-[180px] h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
-          رزرو نوبت
-        </button>
+        <Link href={"services"}>
+          {" "}
+          <button className="font-bold cursor-pointer w-[160px] sm:w-[180px] h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
+            رزرو نوبت
+          </button>
+        </Link>
         <p className="text-2xl sm:text-3xl text-[#f8cc7f]">Story</p>
         <span className="border border-[#f8cc7f] p-2 rounded-full hover:bg-[#f8cc7f]/20 transition">
           <Link href={"/"}>

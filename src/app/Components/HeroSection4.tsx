@@ -23,8 +23,9 @@ function HeroSection4() {
               کامل تر شود اگر به دنبال ترکیبی از مهارت ، دقت ، ظرافت در محیط
               حرفه ای هستید ، اینجا همان جایی است که باید باشد{" "}
             </p>
-            <Link className="" href={"/"}>
-              <button className=" font-bold text-black px-3 py-1 w-[184px] h-[48px] rounded-4xl cursor-pointer bg-[#f8cc7f]">
+            <Link href={"services"}>
+              {" "}
+              <button className="font-bold cursor-pointer w-[160px] sm:w-[180px] h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
                 رزرو نوبت
               </button>
             </Link>
@@ -52,8 +53,9 @@ function HeroSection4() {
               ماسک های درمانی . خدمات نه تنها پوست شما را تازه و درخشان می‌کند
               بلکه به حفظ سلامت و جوانی آن کمک میکند
             </p>
-            <Link className="" href={"/"}>
-              <button className=" font-bold text-black px-3 py-1 w-[184px] h-[48px] rounded-4xl cursor-pointer bg-[#f8cc7f]">
+            <Link href={"services"}>
+              {" "}
+              <button className="font-bold cursor-pointer w-[160px] sm:w-[180px] h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
                 رزرو نوبت
               </button>
             </Link>

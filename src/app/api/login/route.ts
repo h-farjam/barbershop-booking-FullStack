@@ -3,7 +3,6 @@ import ConnectDB from "@/utils/ConnectDB";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-
 const phoneRegex: RegExp = /^09\d{9}$/;
 
 interface LoginBody {
@@ -46,7 +45,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // ✅ ساخت JWT
     const token = jwt.sign(
       {
-        id: existingUser._id,
+        _id: existingUser._id,
         phone: existingUser.phone,
         Fname: existingUser.Fname,
         Lname: existingUser.Lname,

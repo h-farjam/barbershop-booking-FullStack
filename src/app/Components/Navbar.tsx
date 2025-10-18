@@ -1,12 +1,31 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoLogoInstagram } from "react-icons/io";
 import { BiLogoTelegram } from "react-icons/bi";
+import { TokenPayload } from "@/utils/validationToken";
 
 export default function Navbar() {
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [user, setUser] = useState<TokenPayload | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const res = await fetch("/api/status");
+        const data = await res.json();
+        if (data.loggedIn) setUser(data.user);
+        else setUser(null);
+      } catch (err) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchUser();
+  }, []);
 
   return (
     <>
@@ -43,11 +62,20 @@ export default function Navbar() {
               <IoLogoInstagram size={22} />
             </Link>
           </span>
-          <Link href="/login">
-            <p className="w-[140px] flex justify-center items-center rounded-3xl h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black transition">
-             ورود به سایت 
-            </p>
-          </Link>
+
+          {user ? (
+            <Link href="/services">
+              <p className="w-[140px] flex justify-center items-center rounded-3xl h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black transition">
+                رزرو نوبت
+              </p>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <p className="w-[140px] flex justify-center items-center rounded-3xl h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black transition">
+                ورود به سایت
+              </p>
+            </Link>
+          )}
         </div>
 
         {/* Hamburger Menu (Mobile) */}
@@ -85,17 +113,27 @@ export default function Navbar() {
 
             {/* Buttons */}
             <div className="mt-5 flex justify-center gap-3">
-              <Link
-                href="/services"
-                className="bg-green-400 hover:bg-green-500 px-4 py-2 text-sm border-2 border-green-300 text-white rounded-full transition"
-              >
-                رزرو نوبت
-              </Link>
+              {!loading &&
+                (user ? (
+                  <Link
+                    href="/services"
+                    className="bg-green-400 hover:bg-green-500 px-4 py-2 text-sm border-2 border-green-300 text-white rounded-full transition"
+                  >
+                    رزرو نوبت
+                  </Link>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="bg-gray-400 hover:bg-gray-500 px-4 py-2 text-sm border-2 border-gray-300 text-white rounded-full transition"
+                  >
+                    ورود به سایت
+                  </Link>
+                ))}
               <button
                 onClick={() => setOpenModal(false)}
                 className="bg-gray-700 px-4 py-2 text-sm border-2 border-gray-600 text-gray-300 rounded-full hover:bg-gray-800 transition"
               >
-                لفو
+                لغو
               </button>
             </div>
           </div>

@@ -1,17 +1,24 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { FaArrowLeft } from "react-icons/fa";
+const phoneRegex: RegExp = /^09\d{9}$/;
 
 export default function LoginTestPage() {
+  const router = useRouter();
   const [phone, setPhone] = useState(""); // ذخیره مقدار ورودی
   const [loading, setLoading] = useState(false); // وضعیت لودینگ
 
   const SubmitPhone = async () => {
     if (!phone.trim()) {
       toast.error("لطفاً شماره موبایل را وارد کنید");
+      return;
+    }
+    if (!phoneRegex.test(phone)) {
+      toast.error("لطفا شماره موبایل معتبر وارد کنید ");
       return;
     }
 
@@ -21,6 +28,7 @@ export default function LoginTestPage() {
 
       if (res.status === 200) {
         toast.success("با موفقیت وارد شدید");
+        router.push("/");
       }
     } catch (error: any) {
       toast.error(error?.response?.data?.message || "مشکلی پیش آمده است");
@@ -31,7 +39,6 @@ export default function LoginTestPage() {
 
   return (
     <>
-     
       <div className="flex flex-col items-center gap-6 bg-[#ffffff] w-full md:w-1/2 p-6 text-black rounded-lg shadow-md">
         {/* لوگو و نام */}
         <div className="flex items-center justify-center gap-2">
@@ -59,10 +66,16 @@ export default function LoginTestPage() {
             placeholder="شماره موبایل"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="outline-none border w-full px-3 py-2 rounded-[5px] focus:border-gray-400"
+            className={`border w-full px-3 py-2 rounded-[5px] outline-none transition-colors duration-200 ${
+              phone.length === 0
+                ? "border-gray-300" // وقتی هنوز چیزی وارد نشده
+                : phoneRegex.test(phone)
+                ? "border-green-500 focus:border-green-600" // شماره درست ✅
+                : "border-red-500 focus:border-red-600" // شماره اشتباه ❌
+            }`}
           />
 
-          <div className="w-full mt-6">
+          <div className="w-full flex justify-center items-center flex-col gap-5 mt-6">
             <button
               onClick={SubmitPhone}
               disabled={loading}
@@ -74,6 +87,14 @@ export default function LoginTestPage() {
             >
               {loading ? "در حال ارسال..." : "تایید و ادامه"}
             </button>
+            <p className="flex justify-center items-center gap-1">
+              حساب کاربری ندارید?
+              <span>
+                <Link className="text-blue-600" href={"/login/register"}>
+                  ساخت حساب کاربری
+                </Link>
+              </span>
+            </p>
           </div>
         </div>
 
