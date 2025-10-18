@@ -1,10 +1,19 @@
-import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
-  return Response.json({ message: "Hello" });
-}
+export async function POST() {
+  const response = NextResponse.json(
+    { message: "کاربر با موفقیت خارج شد" },
+    { status: 200 }
+  );
 
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-  return Response.json({ message: "Data received", body });
+  // پاک کردن کوکی JWT
+  response.cookies.set("token", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 0, // expire immediately
+    path: "/",
+  });
+
+  return response;
 }

@@ -1,12 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoLogoInstagram } from "react-icons/io";
 import { BiLogoTelegram } from "react-icons/bi";
 import { TokenPayload } from "@/utils/validationToken";
 
 export default function Navbar() {
+  const router = useRouter();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [user, setUser] = useState<TokenPayload | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -26,6 +28,16 @@ export default function Navbar() {
     }
     fetchUser();
   }, []);
+
+  const Logout = async () => {
+    try {
+      await fetch("/api/logout", { method: "POST" });
+      setUser(null);       // وضعیت لاگین رو صفر می‌کنیم
+      router.push("/login"); // ریدایرکت به صفحه لاگین
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
 
   return (
     <>
@@ -50,7 +62,7 @@ export default function Navbar() {
           </ul>
         </div>
 
-        {/* Icons + Button (Desktop) */}
+        {/* Icons + Buttons */}
         <div className="hidden lg:flex text-white justify-center items-center gap-2 font-semibold">
           <span className="border p-2 rounded-full">
             <Link href="/">
@@ -63,19 +75,27 @@ export default function Navbar() {
             </Link>
           </span>
 
-          {user ? (
-            <Link href="/services">
-              <p className="w-[140px] flex justify-center items-center rounded-3xl h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black transition">
-                رزرو نوبت
-              </p>
-            </Link>
-          ) : (
-            <Link href="/login">
-              <p className="w-[140px] flex justify-center items-center rounded-3xl h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black transition">
-                ورود به سایت
-              </p>
-            </Link>
-          )}
+          {!loading &&
+            (user ? (
+              <>
+                <Link href="/services">
+                  <p className="w-[140px] flex justify-center items-center rounded-3xl h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black transition">
+                    رزرو نوبت
+                  </p>
+                </Link>
+                <button onClick={Logout}>
+                  <p className="w-[65px] cursor-pointer flex justify-center items-center rounded-3xl h-[40px] border border-red-500 hover:bg-red-500 hover:text-white transition">
+                    خروج
+                  </p>
+                </button>
+              </>
+            ) : (
+              <Link href="/login">
+                <p className="w-[140px] flex justify-center items-center rounded-3xl h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black transition">
+                  ورود به سایت
+                </p>
+              </Link>
+            ))}
         </div>
 
         {/* Hamburger Menu (Mobile) */}
@@ -88,8 +108,8 @@ export default function Navbar() {
 
       {/* Modal Box */}
       {openModal && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black/70 backdrop-blur-sm z-[100]">
-          <div className="w-[260px] flex flex-col p-4 bg-gray-800 border border-gray-700 shadow-xl rounded-2xl text-center">
+        <div className="fixed inset-0 w-full flex justify-center items-center bg-black/70 backdrop-blur-sm z-[100]">
+          <div className="w-2/3 flex flex-col p-4 bg-gray-800 border border-gray-700 shadow-xl rounded-2xl text-center">
             <h2 className="text-xl font-bold py-4 text-gray-200">منوی سایت</h2>
 
             {/* Menu Links inside modal */}
@@ -115,12 +135,20 @@ export default function Navbar() {
             <div className="mt-5 flex justify-center gap-3">
               {!loading &&
                 (user ? (
-                  <Link
-                    href="/services"
-                    className="bg-green-400 hover:bg-green-500 px-4 py-2 text-sm border-2 border-green-300 text-white rounded-full transition"
-                  >
-                    رزرو نوبت
-                  </Link>
+                  <>
+                    <Link
+                      href="/services"
+                      className="bg-green-400 hover:bg-green-500 px-4 py-2 text-sm border-2 border-green-300 text-white rounded-full transition"
+                    >
+                      رزرو نوبت
+                    </Link>
+                    <button
+                      onClick={Logout}
+                      className="bg-red-500 hover:bg-red-600 px-4 py-2 text-sm border-2 border-red-400 text-white rounded-full transition"
+                    >
+                      خروج
+                    </button>
+                  </>
                 ) : (
                   <Link
                     href="/login"
