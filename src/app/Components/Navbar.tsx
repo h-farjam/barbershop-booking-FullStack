@@ -11,7 +11,7 @@ export default function Navbar() {
   return (
     <>
       {/* Navbar */}
-      <nav className="absolute w-full flex justify-between md:justify-start lg:justify-between gap-10 items-center p-4 z-50">
+      <nav className="absolute top-1 w-full flex justify-between md:justify-start lg:justify-between gap-10 items-center p-4 z-50">
         {/* Logo */}
         <div className="flex items-center gap-2">
           <img className="w-8 h-13" src="/icon scissors.png" alt="logo" />
@@ -43,9 +43,9 @@ export default function Navbar() {
               <IoLogoInstagram size={22} />
             </Link>
           </span>
-          <Link href="/services">
+          <Link href="/login">
             <p className="w-[140px] flex justify-center items-center rounded-3xl h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black transition">
-              رزرو نوبت
+             ورود به سایت 
             </p>
           </Link>
         </div>
