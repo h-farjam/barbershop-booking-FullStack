@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import { BiLogoTelegram } from "react-icons/bi";
 import { LuPhoneCall } from "react-icons/lu";
 import { CiLocationOn, CiTimer } from "react-icons/ci";
+import { IoLogoInstagram } from "react-icons/io";
 
 function HeroSection1() {
   return (
@@ -27,12 +29,33 @@ function HeroSection1() {
         </Link>
         <p className="text-lg sm:text-2xl md:text-3xl text-[#f8cc7f]">Story</p>
         <span className="border border-[#f8cc7f] p-2 rounded-full hover:bg-[#f8cc7f]/20 transition">
-          <Link href={"/"}>
-            <BiLogoTelegram
-              size={"22px"}
-              className="sm:size-[25px] text-[#f8cc7f]"
-            />
-          </Link>
+          <a
+            href="https://t.me/Amirmohammad520" // آیدی تلگرام
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <BiLogoTelegram size={22} />
+          </a>
+        </span>
+
+        <span className="border border-[#f8cc7f] p-2 rounded-full hover:bg-[#f8cc7f]/20 transition">
+          <a
+            href="https://www.instagram.com/amirmohammad_ghorbanpur?igsh=MTNnMnNIMddycXJqZA"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+              // اگر اپ اینستا نصب نبود، بعد نیم ثانیه سایتش باز بشه
+              e.preventDefault();
+              window.location.href =
+                "https://www.instagram.com/amirmohammad_ghorbanpur?igsh=MTNnMnNIMddycXJqZA";
+              setTimeout(() => {
+                window.location.href =
+                  "https://www.instagram.com/amirmohammad_ghorbanpur?igsh=MTNnMnNIMddycXJqZA";
+              }, 500);
+            }}
+          >
+            <IoLogoInstagram size={22} />
+          </a>
         </span>
       </div>
 

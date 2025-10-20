@@ -68,9 +68,9 @@ export default function HeroSection3() {
                 {item.desc}
               </p>
               <div className="flex w-full justify-center">
-                <hr className="w-full border-t-2 border-[#dba952]" />
+              
               </div>
-              <p className="font-semibold text-[#dba952] text-sm sm:text-base md:text-lg text-center sm:text-start">
+              <p className="font-semibold text-[#dba952] text-sm sm:text-base md:text-lg text-right sm:text-start">
                 {item.price}
               </p>
             </div>

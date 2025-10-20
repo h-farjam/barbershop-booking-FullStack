@@ -6,6 +6,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoLogoInstagram } from "react-icons/io";
 import { BiLogoTelegram } from "react-icons/bi";
 import { TokenPayload } from "@/utils/validationToken";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaArrowLeft } from "react-icons/fa";
 
 export default function Navbar() {
   const router = useRouter();
@@ -54,26 +56,38 @@ export default function Navbar() {
         {/* Menu (Desktop) */}
         <div className="hidden md:flex text-white border-l shadow border-t backdrop-blur-xl p-4 rounded-3xl font-semibold">
           <ul className="flex gap-4 lg:gap-8 text-sm md:text-base lg:text-lg">
-            <Link href={"/"}>صفحه اصلی </Link>
+            <Link href={"/"}>صفحه اصلی</Link>
             <Link href={"/products"}>محصولات پوستی</Link>
             <Link href={"/services"}>خدمات</Link>
-            <Link href={"/about"}>درباره ما </Link>
+            <Link href={"/about"}>درباره ما</Link>
           </ul>
         </div>
 
         {/* Icons + Buttons */}
         <div className="hidden lg:flex text-white justify-center items-center gap-2 font-semibold text-sm md:text-base">
-          <span className="border p-2 rounded-full">
-            <Link href="/">
+          {/* Telegram */}
+          <span className="border border-white/40 p-2 rounded-full hover:bg-white/10 transition">
+            <a
+              href="https://t.me/Amirmohammad520"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <BiLogoTelegram size={22} />
-            </Link>
-          </span>
-          <span className="border p-2 rounded-full">
-            <Link href="/">
-              <IoLogoInstagram size={22} />
-            </Link>
+            </a>
           </span>
 
+          {/* Instagram */}
+          <span className="border border-white/40 p-2 rounded-full hover:bg-white/10 transition">
+            <a
+              href="https://www.instagram.com/amirmohammad_ghorbanpur"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <IoLogoInstagram size={22} />
+            </a>
+          </span>
+
+          {/* User Buttons */}
           {!loading &&
             (user ? (
               <>
@@ -105,66 +119,92 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Modal Box */}
-      {openModal && (
-        <div className="fixed inset-0 w-full flex justify-center items-center bg-black/70 backdrop-blur-sm z-[100]">
-          <div className="w-5/6 sm:w-2/3 flex flex-col p-4 bg-gray-800 border border-gray-700 shadow-xl rounded-2xl text-center">
-            <h2 className="text-lg sm:text-xl font-bold py-4 text-gray-200">
-              منوی سایت
-            </h2>
+      {/* Mobile Sidebar Menu */}
+      <AnimatePresence>
+        {openModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex justify-center items-start pt-10"
+          >
+            {/* Blur Dark Background */}
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
 
-            {/* Menu Links inside modal */}
-            <div className="flex flex-col gap-3 text-gray-300 font-medium text-sm sm:text-base">
-              <Link href="/" onClick={() => setOpenModal(false)}>
-                صفحه اصلی
-              </Link>
-              <Link href="/products" onClick={() => setOpenModal(false)}>
-                محصولات پوستی
-              </Link>
-              <Link href="/services" onClick={() => setOpenModal(false)}>
-                خدمات
-              </Link>
-              <Link href="/about" onClick={() => setOpenModal(false)}>
-                درباره ما
-              </Link>
-            </div>
-
-            {/* Buttons */}
-            <div className="mt-5 flex justify-center gap-3">
-              {!loading &&
-                (user ? (
-                  <>
-                    <Link
-                      href="/services"
-                      className="bg-green-400 hover:bg-green-500 px-3 sm:px-4 py-2 text-xs sm:text-sm border-2 border-green-300 text-white rounded-full transition"
-                    >
-                      رزرو نوبت
-                    </Link>
-                    <button
-                      onClick={Logout}
-                      className="bg-red-500 hover:bg-red-600 px-3 sm:px-4 py-2 text-xs sm:text-sm border-2 border-red-400 text-white rounded-full transition"
-                    >
-                      خروج
-                    </button>
-                  </>
-                ) : (
-                  <Link
-                    href="/login"
-                    className="bg-gray-400 hover:bg-gray-500 px-3 sm:px-4 py-2 text-xs sm:text-sm border-2 border-gray-300 text-white rounded-full transition"
-                  >
-                    ورود به سایت
-                  </Link>
-                ))}
+            {/* White Menu */}
+            <motion.div
+              initial={{ y: "-10%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "-10%", opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="relative w-5/6 sm:w-1/2 bg-white p-6 rounded-3xl shadow-xl flex flex-col gap-6 z-10"
+            >
+              {/* Close Button */}
               <button
                 onClick={() => setOpenModal(false)}
-                className="bg-gray-700 px-3 sm:px-4 py-2 text-xs sm:text-sm border-2 border-gray-600 text-gray-300 rounded-full hover:bg-gray-800 transition"
+                className="self-end text-gray-500 hover:text-black hover:rotate-6 text-2xl transition"
               >
-                لغو
+                <FaArrowLeft />
               </button>
-            </div>
-          </div>
-        </div>
-      )}
+
+              {/* Menu Links */}
+              <div className="flex flex-col gap-4">
+                {[
+                  { href: "/", label: "صفحه اصلی" },
+                  { href: "/products", label: "محصولات پوستی" },
+                  { href: "/services", label: "خدمات" },
+                  { href: "/about", label: "درباره ما" },
+                ].map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setOpenModal(false)}
+                    className="border border-gray-300 rounded-xl p-3 text-center text-gray-700 font-medium transition-all duration-300 hover:shadow hover:rounded-3xl"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+
+              {/* Buttons */}
+              <div className="flex flex-col gap-3 mt-4">
+                {!loading &&
+                  (user ? (
+                    <>
+                      <Link
+                        href="/services"
+                        onClick={() => setOpenModal(false)}
+                        className="bg-gray-100 px-4 py-2 rounded-xl text-center font-semibold text-green-600 transition hover:bg-gray-200"
+                      >
+                        رزرو نوبت
+                      </Link>
+                      <button
+                        onClick={Logout}
+                        className="bg-gray-100 cursor-pointer px-4 py-2 rounded-xl text-center font-semibold text-red-600 transition hover:bg-gray-200"
+                      >
+                        خروج
+                      </button>
+                    </>
+                  ) : (
+                    <Link
+                      href="/login"
+                      onClick={() => setOpenModal(false)}
+                      className="bg-gray-100 px-4 py-2 rounded-xl text-center font-semibold text-gray-800 transition hover:bg-gray-200"
+                    >
+                      ورود به سایت
+                    </Link>
+                  ))}
+                <button
+                  onClick={() => setOpenModal(false)}
+                  className="bg-gray-100 cursor-pointer px-4 py-2 rounded-xl text-center font-semibold text-gray-800 transition hover:bg-gray-200"
+                >
+                  لغو
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
