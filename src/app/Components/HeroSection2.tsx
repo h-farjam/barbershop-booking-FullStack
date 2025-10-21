@@ -3,18 +3,25 @@ import React from "react";
 export default function HeroSection2() {
   return (
     <div className="bg-[#2f2f2f] w-full h-auto py-10 sm:py-12 md:py-15 text-white overflow-x-hidden">
-      
       {/* نوار طلایی چرخیده */}
       <div className="bg-[#f8cc7f] w-[110%] -mx-5 sm:-mx-6 md:-mx-8 flex justify-around items-center py-3 sm:py-4 md:py-5 text-black text-xs sm:text-sm md:text-base lg:text-lg font-semibold rotate-3">
         <p className="flex items-center gap-1">
-          <img className="w-4 h-6 sm:w-5 sm:h-8" src="/icon scissors.png" alt="" />
+          <img
+            className="w-4 h-6 sm:w-5 sm:h-8"
+            src="/icon scissors.png"
+            alt=""
+          />
           Book My Barber
         </p>
         <p>Book My Barber</p>
         <p>Book My Barber</p>
         <p>Book My Barber</p>
         <p className="flex items-center gap-1">
-          <img className="w-4 h-6 sm:w-5 sm:h-8" src="/icon scissors.png" alt="" />
+          <img
+            className="w-4 h-6 sm:w-5 sm:h-8"
+            src="/icon scissors.png"
+            alt=""
+          />
           Book My Barber
         </p>
         <p>Book My Barber</p>
