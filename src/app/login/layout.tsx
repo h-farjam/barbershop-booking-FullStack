@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Vazirmatn } from "next/font/google";
-import Link from "next/link";
+
 
 const vazirmatn = Vazirmatn({
   subsets: ["latin", "arabic"],

@@ -16,11 +16,6 @@ export interface IService {
 export default async function ServicesPage() {
   await ConnectDB();
 
-  const services = await Service.find().select("-__v").lean<IService[]>();
-  const ServiceData: IService[] = services.map((s: any) => ({
-    ...s,
-    _id: s._id.toString(),
-  }));
   const token = await ValidateToken();
   if (!token) {
     redirect("/login");
@@ -37,8 +32,7 @@ export default async function ServicesPage() {
         </p>
       </div>
 
-      {/* ✅ انتقال داده به کلاینت کامپوننت */}
-      <ServicesList services={ServiceData} />
+      <ServicesList />
     </div>
   );
 }
