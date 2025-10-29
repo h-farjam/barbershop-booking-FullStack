@@ -182,7 +182,7 @@ export default function Navbar() {
                         onClick={Logout}
                         className="bg-gray-100 cursor-pointer px-4 py-2 rounded-xl text-center font-semibold text-red-600 transition hover:bg-gray-200"
                       >
-                        خروج
+                        خروج از سایت
                       </button>
                     </>
                   ) : (
