@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
 import React from "react";
+import { motion } from "framer-motion";
 
 export default function HeroSection3() {
   const services = [
@@ -49,11 +51,28 @@ export default function HeroSection3() {
       </h1>
 
       {/* کارت‌ها */}
-      <div className="rounded-[20px] py-8 px-6 shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-6xl">
+      <motion.div
+        className="rounded-[20px] py-8 px-6 shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-6xl"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.1 } },
+        }}
+      >
         {services.map((item, index) => (
-          <div
+          <motion.div
             key={index}
             className="flex flex-col sm:flex-row items-start gap-4"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.5, ease: "easeOut" },
+              },
+            }}
           >
             <img
               src={item.img}
@@ -67,25 +86,24 @@ export default function HeroSection3() {
               <p className="text-xs sm:text-sm md:text-base text-gray-700 leading-relaxed">
                 {item.desc}
               </p>
-              <div className="flex w-full justify-center">
-              
-              </div>
               <p className="font-semibold text-[#dba952] text-sm sm:text-base md:text-lg text-right sm:text-start">
                 {item.price}
               </p>
             </div>
-          </div>
+          </motion.div>
         ))}
 
         {/* دکمه رزرو نوبت */}
         <div className="col-span-1 md:col-span-2 flex justify-center mt-4">
-          <Link href="/services">
-            <button className="font-bold text-sm sm:text-base md:text-lg cursor-pointer w-[150px] sm:w-[180px] h-[42px] sm:h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
-              رزرو نوبت
-            </button>
-          </Link>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link href="/services">
+              <button className="font-bold text-sm sm:text-base md:text-lg cursor-pointer w-[150px] sm:w-[180px] h-[42px] sm:h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
+                رزرو نوبت
+              </button>
+            </Link>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

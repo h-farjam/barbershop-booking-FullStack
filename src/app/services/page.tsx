@@ -32,7 +32,7 @@ export default async function ServicesPage() {
           عزیز ❤️
         </p>
       </div>
-      <div >
+      <div>
         <Link href={"/"}>
           <FancyButton />
         </Link>

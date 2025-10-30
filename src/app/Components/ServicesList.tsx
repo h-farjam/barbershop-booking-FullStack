@@ -4,6 +4,7 @@ import { IService } from "@/app/services/page";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Spinner from "./Spinner";
+import Link from "next/link";
 
 interface Props {
   initialServices?: IService[];
@@ -107,14 +108,16 @@ export default function ServicesList({ initialServices }: Props) {
                     {item.price} تومان
                   </p>
 
-                  <motion.button
-                    onClick={() => alert(`رزرو ${item.title} انجام شد ✅`)}
-                    className="mt-4 cursor-pointer w-full rounded-lg bg-blue-500 py-2 text-white font-semibold shadow-lg"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    رزرو
-                  </motion.button>
+                  <Link href={"/BookingTurn"}>
+                    {" "}
+                    <motion.button
+                      className="mt-4 cursor-pointer w-full rounded-lg bg-blue-500 py-2 text-white font-semibold shadow-lg"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      رزرو
+                    </motion.button>
+                  </Link>
                 </div>
               </motion.div>
             ))

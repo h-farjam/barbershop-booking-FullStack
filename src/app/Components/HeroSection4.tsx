@@ -1,21 +1,44 @@
+"use client";
 import Link from "next/link";
 import React from "react";
+import { motion } from "framer-motion";
 
 function HeroSection4() {
   return (
     <section className="grid w-full p-5 bg-[#262626] grid-cols-1">
       {/* بخش اول */}
-      <div className="grid grid-cols-1 md:grid-cols-2 relative gap-10 md:gap-2 items-center">
-        <div className="flex justify-end md:justify-start">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 relative gap-10 md:gap-2 items-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.2 } },
+        }}
+      >
+        <motion.div
+          className="flex justify-end md:justify-start"
+          variants={{
+            hidden: { opacity: 0, x: 50 },
+            visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
+          }}
+        >
           <div className="w-[300px] sm:w-[350px] md:w-[390px] h-[350px] sm:h-[400px] md:h-[435px] mx-0 md:mx-10 border border-[#f8cc7f]"></div>
           <img
             className="max-w-[300px] sm:max-w-[350px] md:max-w-[390px] absolute top-8 sm:top-10 right-3 sm:right-10 md:right-20 max-h-[340px] sm:max-h-[400px] md:max-h-[428px]"
             src="/Rectangle 2@2x.png"
             alt=""
           />
-        </div>
+        </motion.div>
 
-        <div className="text-white px-4 sm:px-8 md:px-10 flex flex-col gap-3 sm:gap-4">
+        <motion.div
+          className="text-white px-4 sm:px-8 md:px-10 flex flex-col gap-3 sm:gap-4"
+          variants={{
+            hidden: { opacity: 0, x: -50 },
+            visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
+          }}
+        >
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug">
             اصلاح ریش و صورت
           </h1>
@@ -26,29 +49,51 @@ function HeroSection4() {
             شود. اگر به دنبال ترکیبی از مهارت، دقت و ظرافت در محیطی حرفه‌ای
             هستید، اینجا همان جایی است که باید باشید.
           </p>
-          <Link href={"services"}>
-            <button className="font-bold text-sm sm:text-base md:text-lg cursor-pointer w-[140px] sm:w-[160px] md:w-[180px] h-[40px] sm:h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
-              رزرو نوبت
-            </button>
-          </Link>
-        </div>
-      </div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link href={"services"}>
+              <button className="font-bold text-sm sm:text-base md:text-lg cursor-pointer w-[140px] sm:w-[160px] md:w-[180px] h-[40px] sm:h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
+                رزرو نوبت
+              </button>
+            </Link>
+          </motion.div>
+        </motion.div>
+      </motion.div>
 
-      {/* ------------------- بخش دوم ------------------- */}
-      <div
+      {/* بخش دوم */}
+      <motion.div
         dir="ltr"
         className="grid grid-cols-1 md:grid-cols-2 relative my-10 md:my-15 gap-10 md:gap-2 items-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.2 } },
+        }}
       >
-        <div className="flex justify-end md:justify-start">
+        <motion.div
+          className="flex justify-end md:justify-start"
+          variants={{
+            hidden: { opacity: 0, x: -50 },
+            visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
+          }}
+        >
           <div className="w-[300px] sm:w-[350px] md:w-[390px] h-[350px] sm:h-[400px] md:h-[435px] mx-0 md:mx-10 border border-[#f8cc7f]"></div>
           <img
             className="max-w-[300px] sm:max-w-[350px] md:max-w-[390px] absolute top-8 sm:top-10 left-3 sm:left-10 md:left-20 max-h-[340px] sm:max-h-[400px] md:max-h-[428px]"
             src="/Rectangle 1.jpg"
             alt=""
           />
-        </div>
+        </motion.div>
 
-        <div dir="rtl" className="text-white px-4 sm:px-8 md:px-10 flex flex-col gap-3 sm:gap-4">
+        <motion.div
+          dir="rtl"
+          className="text-white px-4 sm:px-8 md:px-10 flex flex-col gap-3 sm:gap-4"
+          variants={{
+            hidden: { opacity: 0, x: 50 },
+            visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
+          }}
+        >
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug">
             مراقبت پوستی
           </h1>
@@ -59,13 +104,15 @@ function HeroSection4() {
             خدمات نه‌تنها پوست شما را تازه و درخشان می‌کند، بلکه به حفظ سلامت و
             جوانی آن کمک می‌کند.
           </p>
-          <Link href={"services"}>
-            <button className="font-bold text-sm sm:text-base md:text-lg cursor-pointer w-[140px] sm:w-[160px] md:w-[180px] h-[40px] sm:h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
-              رزرو نوبت
-            </button>
-          </Link>
-        </div>
-      </div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link href={"services"}>
+              <button className="font-bold text-sm sm:text-base md:text-lg cursor-pointer w-[140px] sm:w-[160px] md:w-[180px] h-[40px] sm:h-[45px] rounded-3xl bg-[#f8cc7f] text-black hover:bg-[#e0b85a] transition">
+                رزرو نوبت
+              </button>
+            </Link>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
