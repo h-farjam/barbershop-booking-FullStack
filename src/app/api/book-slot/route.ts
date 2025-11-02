@@ -25,9 +25,23 @@ export async function POST(req: Request) {
   if (slot.isBooked)
     return NextResponse.json({ message: "Slot قبلا رزرو شده", status: 400 });
 
+  // بررسی اینکه کاربر قبلاً در همان روز رزرو نکرده باشد
+  const existingBooking = await TimeSlot.findOne({
+    date: slot.date, // همان روز
+    bookedBy: `${token.Fname} ${token.Lname}`,
+    isBooked: true,
+  });
+
+  if (existingBooking) {
+    return NextResponse.json({
+      message: "شما قبلاً یک نوبت در این روز رزرو کرده‌اید",
+      status: 400,
+    });
+  }
+
   // رزرو اسلات با نام کاربر
   slot.isBooked = true;
-  slot.bookedBy = `${token.Fname} ${token.Lname}`; // یا هر اطلاعاتی که ValidateToken برمی‌گرداند
+  slot.bookedBy = `${token.Fname} ${token.Lname}`;
   slot.bookedAt = new Date();
   await slot.save();
 

@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
-// مدل اسلات‌ها
 interface Slot {
   _id: string;
   date: string;
@@ -13,46 +13,26 @@ interface Slot {
   bookedBy?: string;
 }
 
-// کارت تک اسلات
-function SlotCard({
-  time,
-  isBooked,
-  bookedBy,
-  onBook,
-}: {
-  time: string;
-  isBooked: boolean;
-  bookedBy?: string;
-  onBook?: () => void;
-}) {
-  return (
-    <div
-      className={`p-4 rounded-xl shadow-lg border transition-all duration-200
-        ${
-          isBooked
-            ? "bg-gray-700 border-gray-600 cursor-not-allowed"
-            : "bg-gradient-to-r from-yellow-400 to-orange-400 border-yellow-300 cursor-pointer"
-        }
-        hover:scale-105`}
-      onClick={() => !isBooked && onBook?.()}
-    >
-      <h3 className="text-lg font-semibold text-white">{time}</h3>
-      {isBooked ? (
-        <p className="mt-2 text-sm text-gray-300">رزرو شده توسط: {bookedBy}</p>
-      ) : (
-        <p className="mt-2 text-sm text-white">رزرو در دسترس</p>
-      )}
-    </div>
-  );
-}
-
-// کامپوننت اصلی
 export default function SlotsList() {
   const [slots, setSlots] = useState<Slot[]>([]);
   const [loading, setLoading] = useState(true);
   const [today, setToday] = useState("");
+  const router = useRouter();
 
-  // گرفتن تاریخ امروز
+  // بررسی وضعیت ورود کاربر
+  useEffect(() => {
+    const checkStatus = async () => {
+      try {
+        const res = await axios.get("/api/status");
+        if (!res.data.loggedIn) router.push("/login");
+      } catch (err) {
+        console.error("خطا در بررسی وضعیت:", err);
+      }
+    };
+    checkStatus();
+  }, [router]);
+
+  // تاریخ امروز به تقویم فارسی
   useEffect(() => {
     const now = new Date();
     const iranTime = new Date(
@@ -66,26 +46,28 @@ export default function SlotsList() {
     setToday(formatted);
   }, []);
 
-  // گرفتن اسلات‌ها
+  // گرفتن لیست اسلات‌ها از API
   useEffect(() => {
     const fetchSlots = async () => {
       try {
         const { data } = await axios.get("/api/Slots");
         setSlots(data);
-        setLoading(false);
       } catch (err) {
         console.error("خطا در گرفتن اسلات‌ها:", err);
+      } finally {
         setLoading(false);
       }
     };
-
     fetchSlots();
   }, []);
 
-  // رزرو اسلات
+  // رزرو نوبت
   const bookSlot = async (slotId: string) => {
     try {
       const { data } = await axios.post("/api/book-slot", { slotId });
+      if (data.message == "شما قبلاً یک نوبت در این روز رزرو کرده‌اید") {
+        return toast.error("شما قبلاً در این روز رزرو کرده‌اید!");
+      }
       if (data.message) {
         toast.success("نوبت شما با موفقیت رزرو شد!");
         setSlots((prev) =>
@@ -102,21 +84,60 @@ export default function SlotsList() {
   };
 
   if (loading)
-    return <p className="p-4 text-white">در حال بارگذاری اسلات‌ها...</p>;
+    return (
+      <p className="p-4 text-white text-center">در حال بارگذاری اسلات‌ها...</p>
+    );
 
   return (
-    <div className="p-4">
-      <Toaster position="top-right" reverseOrder={false} />
-      <h2 className="text-2xl font-bold text-white mb-4">{today}</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {slots.map((slot) => (
-          <SlotCard
-            key={slot._id}
-            time={slot.time}
-            isBooked={slot.isBooked}
-            bookedBy={slot.bookedBy}
-            onBook={() => bookSlot(slot._id)}
-          />
+    <div className="p-6">
+      <Toaster position="top-center" />
+      <h2 className="text-2xl font-bold text-center text-white mb-8">
+        {today}
+      </h2>
+
+      {/* گرید کارت‌ها */}
+      <div className="flex flex-wrap justify-center items-center gap-15">
+        {slots.map((item, index) => (
+          <div
+            key={item._id}
+            className="relative flex w-80 flex-col rounded-2xl bg-white text-gray-700 shadow-lg transition-transform hover:scale-105 hover:shadow-xl"
+          >
+            <div
+              className={`relative mx-4 -mt-6 h-36 overflow-hidden rounded-xl
+              ${
+                item.isBooked ? "bg-[#ca8282]" : "bg-[#6f9b6d]"
+              } shadow-md flex items-center justify-center text-white text-lg font-semibold`}
+            >
+              {`نوبت ${index + 1}`}
+            </div>
+
+            <div className="p-6 text-center">
+              <h5 className="text-xl font-bold mb-2">{item.time}</h5>
+              <p className="text-sm text-gray-600">{item.date}</p>
+              <p
+                className={`mt-3 text-sm font-medium ${
+                  item.isBooked ? "text-red-500" : "text-green-600"
+                }`}
+              >
+                {item.isBooked ? `رزرو شده توسط ${item.bookedBy}` : "رزرو نشده"}
+              </p>
+            </div>
+
+            <div className="p-4 pt-0">
+              <button
+                onClick={() => bookSlot(item._id)}
+                disabled={item.isBooked}
+                className={`w-full rounded-lg 
+                  ${
+                    item.isBooked ? "cursor-no-drop" : "cursor-pointer"
+                  } py-3 font-bold text-white transition-all ${
+                  item.isBooked ? "bg-[#ca8282]" : "bg-[#6f9b6d]"
+                }`}
+              >
+                {item.isBooked ? "نوبت رزرو شده " : "رزرو"}
+              </button>
+            </div>
+          </div>
         ))}
       </div>
     </div>
