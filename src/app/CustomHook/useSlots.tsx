@@ -63,7 +63,7 @@ export default function useSlots() {
   // رزرو نوبت
   const bookSlot = async (slotId: string) => {
     try {
-      const { data } = await axios.post("/api/book-slot", { slotId });
+      const { data } = await axios.post("/api/book-slot", { slotId } , );
       if (data.message == "شما قبلاً یک نوبت در این روز رزرو کرده‌اید") {
         return toast.error("شما قبلاً در این روز رزرو کرده‌اید!");
       }
