@@ -108,8 +108,12 @@ export default function ServicesList({ initialServices }: Props) {
                     {item.price} تومان
                   </p>
 
-                  <Link href={"/BookingTurn"}>
-                    {" "}
+                  <Link
+                    href={{
+                      pathname: "/BookingTurn",
+                      query: { service: item.title, price: item.price }, // 👈 ارسال نام سرویس
+                    }}
+                  >
                     <motion.button
                       className="mt-4 cursor-pointer w-full rounded-lg bg-blue-500 py-2 text-white font-semibold shadow-lg"
                       whileHover={{ scale: 1.05 }}
