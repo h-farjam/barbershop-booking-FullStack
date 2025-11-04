@@ -1,11 +1,13 @@
 "use client";
+
 import { useSearchParams } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 import useSlots from "../CustomHook/useSlots";
 import SlotCard from "../Components/SlotsCard";
 import { Toaster } from "react-hot-toast";
 
-export default function SlotsList() {
+// 🔹 محتوای اصلی که از useSearchParams استفاده می‌کنه
+function SlotsListContent() {
   const { slots, loading, today, bookSlot } = useSlots();
   const searchParams = useSearchParams();
 
@@ -44,5 +46,14 @@ export default function SlotsList() {
         ))}
       </div>
     </div>
+  );
+}
+
+// 🔸 کامپوننت اصلی که Suspense را اضافه می‌کند
+export default function SlotsList() {
+  return (
+    <Suspense fallback={<p className="text-center text-gray-500 mt-10">در حال بارگذاری...</p>}>
+      <SlotsListContent />
+    </Suspense>
   );
 }

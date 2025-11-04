@@ -57,8 +57,8 @@ export default function Navbar() {
         <div className="hidden md:flex text-white border-l shadow border-t backdrop-blur-xl p-4 rounded-3xl font-semibold">
           <ul className="flex gap-4 lg:gap-8 text-sm md:text-base lg:text-lg">
             <Link href={"/"}>صفحه اصلی</Link>
-            <Link href={"/products"}>محصولات پوستی</Link>
             <Link href={"/services"}>خدمات</Link>
+            <Link href={"/products"}>محصولات پوستی</Link>
             <Link href={"/about"}>درباره ما</Link>
           </ul>
         </div>
@@ -151,8 +151,8 @@ export default function Navbar() {
               <div className="flex flex-col gap-4">
                 {[
                   { href: "/", label: "صفحه اصلی" },
-                  { href: "/products", label: "محصولات پوستی" },
                   { href: "/services", label: "خدمات" },
+                  { href: "/products", label: "محصولات پوستی" },
                   { href: "/about", label: "درباره ما" },
                 ].map((item) => (
                   <Link

@@ -1,6 +1,5 @@
 import React from "react";
 import { Slot } from "../CustomHook/useSlots";
-import Service from "@/models/Service";
 
 interface Props {
   item: Slot;

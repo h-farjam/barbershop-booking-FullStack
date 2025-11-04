@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaArrowLeft } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 const phoneRegex: RegExp = /^09\d{9}$/;
+const persianRegex: RegExp = /^[\u0600-\u06FF\s]+$/; // فقط حروف فارسی
 
 export default function RegisterTestPage() {
   const router = useRouter();
@@ -16,12 +18,38 @@ export default function RegisterTestPage() {
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [errorFname, setErrorFname] = useState("");
+  const [errorLname, setErrorLname] = useState("");
+
+  const validateFname = (value: string) => {
+    if (value.trim().length === 0) return "";
+    if (!persianRegex.test(value)) return "نام باید فقط شامل حروف فارسی باشد";
+    if (value.length < 3) return "نام باید حداقل ۳ حرف باشد";
+    if (value.length > 15) return "نام نمی‌تواند بیشتر از ۱۵ حرف باشد";
+    return "";
+  };
+
+  const validateLname = (value: string) => {
+    if (value.trim().length === 0) return "";
+    if (!persianRegex.test(value))
+      return "نام خانوادگی باید فقط شامل حروف فارسی باشد";
+    if (value.length < 3) return "نام خانوادگی باید حداقل ۳ حرف باشد";
+    if (value.length > 15)
+      return "نام خانوادگی نمی‌تواند بیشتر از ۱۵ حرف باشد";
+    return "";
+  };
+
   const handleRegister = async () => {
-    // اعتبارسنجی در سمت کلاینت
     if (!Fname.trim() || !Lname.trim() || !phone.trim()) {
       toast.error("لطفاً همه فیلدها را پر کنید");
       return;
     }
+
+    if (errorFname || errorLname) {
+      toast.error("لطفاً خطاهای فرم را برطرف کنید");
+      return;
+    }
+
     if (!phoneRegex.test(phone)) {
       toast.error("شماره موبایل معتبر نیست");
       return;
@@ -54,37 +82,73 @@ export default function RegisterTestPage() {
 
       <h1 className="font-bold text-[20px]">ثبت نام در سایت</h1>
 
-      {/* فرم ثبت‌نام */}
-      <div className="flex flex-col gap-3 w-full">
+      {/* فرم */}
+      <div className="flex flex-col gap-4 w-full">
         {/* نام */}
-        <input
-          type="text"
-          placeholder="نام خود را وارد کنید"
-          value={Fname}
-          onChange={(e) => setFname(e.target.value)}
-          className={`border w-full px-3 py-2 rounded-[5px] outline-none transition-colors duration-200 ${
-            Fname.length === 0
-              ? "border-gray-300"
-              : Fname.length >= 3 && Fname.length <= 15
-              ? "border-green-500 focus:border-green-600"
-              : "border-red-500 focus:border-red-600"
-          }`}
-        />
+        <div className="flex flex-col gap-1">
+          <input
+            type="text"
+            placeholder="نام خود را وارد کنید"
+            value={Fname}
+            onChange={(e) => {
+              setFname(e.target.value);
+              setErrorFname(validateFname(e.target.value));
+            }}
+            className={`border w-full px-3 py-2 rounded-[5px] outline-none transition-colors duration-200 ${
+              errorFname
+                ? "border-red-500 focus:border-red-600"
+                : Fname.length === 0
+                ? "border-gray-300"
+                : "border-green-500 focus:border-green-600"
+            }`}
+          />
+          <AnimatePresence>
+            {errorFname && (
+              <motion.p
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+                transition={{ duration: 0.3 }}
+                className="text-sm text-red-500"
+              >
+                {errorFname}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
 
         {/* نام خانوادگی */}
-        <input
-          type="text"
-          placeholder="نام خانوادگی خود را وارد کنید"
-          value={Lname}
-          onChange={(e) => setLname(e.target.value)}
-          className={`border w-full px-3 py-2 rounded-[5px] outline-none transition-colors duration-200 ${
-            Lname.length === 0
-              ? "border-gray-300"
-              : Lname.length >= 3 && Lname.length <= 15
-              ? "border-green-500 focus:border-green-600"
-              : "border-red-500 focus:border-red-600"
-          }`}
-        />
+        <div className="flex flex-col gap-1">
+          <input
+            type="text"
+            placeholder="نام خانوادگی خود را وارد کنید"
+            value={Lname}
+            onChange={(e) => {
+              setLname(e.target.value);
+              setErrorLname(validateLname(e.target.value));
+            }}
+            className={`border w-full px-3 py-2 rounded-[5px] outline-none transition-colors duration-200 ${
+              errorLname
+                ? "border-red-500 focus:border-red-600"
+                : Lname.length === 0
+                ? "border-gray-300"
+                : "border-green-500 focus:border-green-600"
+            }`}
+          />
+          <AnimatePresence>
+            {errorLname && (
+              <motion.p
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+                transition={{ duration: 0.3 }}
+                className="text-sm text-red-500"
+              >
+                {errorLname}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
 
         {/* شماره موبایل */}
         <input
