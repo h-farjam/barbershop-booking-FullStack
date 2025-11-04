@@ -111,7 +111,11 @@ export default function ServicesList({ initialServices }: Props) {
                   <Link
                     href={{
                       pathname: "/BookingTurn",
-                      query: { service: item.title, price: item.price }, // 👈 ارسال نام سرویس
+                      query: {
+                        service: item.title,
+                        price: item.price,
+                        serviceId: item._id,
+                      }, // 👈 ارسال نام سرویس
                     }}
                   >
                     <motion.button

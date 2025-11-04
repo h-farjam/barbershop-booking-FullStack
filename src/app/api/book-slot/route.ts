@@ -3,11 +3,14 @@ import { NextResponse } from "next/server";
 import ConnectDB from "@/utils/ConnectDB";
 import TimeSlot from "@/models/TimeSlot";
 import { ValidateToken } from "@/utils/validationToken";
+import Reservation from "@/models/Reservations";
+
+
 
 export async function POST(req: Request) {
   await ConnectDB();
 
-  const { slotId } = await req.json();
+  const { slotId, serviceId } = await req.json();
   if (!slotId)
     return NextResponse.json({ message: "Slot نامعتبر است" }, { status: 400 });
 
@@ -38,6 +41,11 @@ export async function POST(req: Request) {
       status: 400,
     });
   }
+  await Reservation.create({
+    userId: token._id,
+    serviceId,
+    slotId,
+  });
 
   // رزرو اسلات با نام کاربر
   slot.isBooked = true;

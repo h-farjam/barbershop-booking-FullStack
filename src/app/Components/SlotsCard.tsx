@@ -1,13 +1,15 @@
 import React from "react";
 import { Slot } from "../CustomHook/useSlots";
+import Service from "@/models/Service";
 
 interface Props {
   item: Slot;
   index: number;
-  onBook: (id: string) => void;
+  serviceId: string;
+  onBook: (id: string, serviceId: string) => void;
 }
 
-export default function SlotCard({ item, index, onBook }: Props) {
+export default function SlotCard({ item, serviceId, index, onBook }: Props) {
   return (
     <div
       key={item._id}
@@ -35,7 +37,7 @@ export default function SlotCard({ item, index, onBook }: Props) {
 
       <div className="p-4 pt-0">
         <button
-          onClick={() => onBook(item._id)}
+          onClick={() => onBook(item._id, serviceId)}
           disabled={item.isBooked}
           className={`w-full rounded-lg 
             ${item.isBooked ? "cursor-no-drop" : "cursor-pointer"}
