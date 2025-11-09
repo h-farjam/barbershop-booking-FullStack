@@ -15,11 +15,35 @@ export default function ReservationTable() {
   const [reservations, setReservations] = useState<IReservation[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // تابع گرفتن تاریخ امروز و فردا بر اساس زمان ایران
+  const getTodayAndTomorrowISO = () => {
+    const now = new Date();
+    const iranTime = new Date(
+      now.toLocaleString("en-US", { timeZone: "Asia/Tehran" })
+    );
+
+    const todayISO = iranTime.toISOString().split("T")[0];
+
+    const tomorrow = new Date(iranTime);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowISO = tomorrow.toISOString().split("T")[0];
+
+    return [todayISO, tomorrowISO];
+  };
+
   useEffect(() => {
     const fetchReservations = async () => {
       try {
         const res = await axios.get("/api/reservations");
-        setReservations(res.data.data);
+        const [today, tomorrow] = getTodayAndTomorrowISO();
+
+        // فقط رزروهای امروز و فردا
+        const filtered = res.data.data.filter(
+          (r: IReservation) =>
+            r.slotId?.date === today || r.slotId?.date === tomorrow
+        );
+
+        setReservations(filtered);
       } catch (err) {
         console.error("❌ خطا در گرفتن رزروها:", err);
       } finally {
@@ -31,12 +55,24 @@ export default function ReservationTable() {
 
   if (loading)
     return (
-      <p className="text-center mt-10 text-gray-700">در حال بارگذاری رزروها...</p>
+      <p className="text-center mt-10 text-gray-700">
+        در حال بارگذاری رزروها...
+      </p>
     );
+
+  const toPersianDate = (dateStr?: string) => {
+    if (!dateStr) return "-";
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("fa-IR", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   return (
     <div className="w-full mt-6">
-      {/* 📱 حالت دسکتاپ */}
+      {/* دسکتاپ */}
       <div className="hidden md:block overflow-x-auto">
         <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead className="bg-gray-200">
@@ -47,7 +83,8 @@ export default function ReservationTable() {
               <th className="py-3 px-6">سرویس</th>
               <th className="py-3 px-6">قیمت</th>
               <th className="py-3 px-6">تاریخ رزرو</th>
-              <th className="py-3 px-6">زمان اسلات</th>
+              <th className="py-3 px-6">روز رزرو</th>
+              <th className="py-3 px-6">ساعت رزرو</th>
             </tr>
           </thead>
           <tbody>
@@ -65,7 +102,8 @@ export default function ReservationTable() {
                     ? `${res.serviceId.price.toLocaleString()} تومان`
                     : "-"}
                 </td>
-                <td className="py-3 px-6">{res.slotId?.date || "-"}</td>
+                <td className="py-3 px-6">{toPersianDate(res.bookedAt)}</td>
+                <td className="py-3 px-6">{toPersianDate(res.slotId?.date)}</td>
                 <td className="py-3 px-6">{res.slotId?.time || "-"}</td>
               </tr>
             ))}
@@ -73,7 +111,7 @@ export default function ReservationTable() {
         </table>
       </div>
 
-      {/* 📱 حالت موبایل */}
+      {/* موبایل */}
       <div className="md:hidden flex flex-col gap-4">
         {reservations.map((res) => (
           <div
@@ -105,11 +143,15 @@ export default function ReservationTable() {
               </span>
             </div>
             <div className="flex justify-between mb-2">
-              <span className="font-semibold">تاریخ:</span>
-              <span>{res.slotId?.date || "-"}</span>
+              <span className="font-semibold">تاریخ رزرو:</span>
+              <span>{toPersianDate(res.bookedAt)}</span>
+            </div>
+            <div className="flex justify-between mb-2">
+              <span className="font-semibold">روز رزرو:</span>
+              <span>{toPersianDate(res.slotId?.date)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-semibold">زمان:</span>
+              <span className="font-semibold">ساعت رزرو:</span>
               <span>{res.slotId?.time || "-"}</span>
             </div>
           </div>

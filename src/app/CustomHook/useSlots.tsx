@@ -6,74 +6,74 @@ import { useRouter } from "next/navigation";
 
 export interface Slot {
   _id: string;
-  date: string;
+  date: string; // YYYY-MM-DD از API
   time: string;
   isBooked: boolean;
-  bookedBy?: string;
+  bookedBy?: string | null;
 }
 
 export default function useSlots() {
   const [slots, setSlots] = useState<Slot[]>([]);
   const [loading, setLoading] = useState(true);
-  const [today, setToday] = useState("");
+  const [selectedDay, setSelectedDay] = useState<"today" | "tomorrow">("today");
   const router = useRouter();
 
-  // بررسی وضعیت ورود کاربر
+  // بررسی وضعیت ورود
   useEffect(() => {
     const checkStatus = async () => {
       try {
         const res = await axios.get("/api/status");
         if (!res.data.loggedIn) router.push("/login");
       } catch (err) {
-        console.error("خطا در بررسی وضعیت:", err);
+        console.error(err);
       }
     };
     checkStatus();
   }, [router]);
 
-  // تاریخ امروز
-  useEffect(() => {
-    const now = new Date();
-    const iranTime = new Date(
-      now.toLocaleString("en-US", { timeZone: "Asia/Tehran" })
-    );
-    const formatted = iranTime.toLocaleDateString("fa-IR", {
+  // تبدیل تاریخ YYYY-MM-DD به فارسی
+  const toPersianDate = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("fa-IR", {
       weekday: "long",
       month: "long",
       day: "numeric",
     });
-    setToday(formatted);
-  }, []);
+  };
 
-  // گرفتن لیست اسلات‌ها
+  // گرفتن اسلات‌ها
+  const fetchSlots = async (day: "today" | "tomorrow" = selectedDay) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`/api/Slots?day=${day}`);
+      setSlots(Array.isArray(data) ? data.map(slot => ({
+        ...slot,
+        date: toPersianDate(slot.date)
+      })) : []);
+      setSelectedDay(day);
+    } catch (err) {
+      console.error(err);
+      setSlots([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchSlots = async () => {
-      try {
-        const { data } = await axios.get("/api/Slots");
-        setSlots(data);
-      } catch (err) {
-        console.error("خطا در گرفتن اسلات‌ها:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchSlots();
+    fetchSlots("today");
   }, []);
 
   // رزرو نوبت
   const bookSlot = async (slotId: string, serviceId: string) => {
     try {
-      const { data } = await axios.post("/api/book-slot", {
-        slotId,
-        serviceId,
-      });
-      if (data.message == "شما قبلاً یک نوبت در این روز رزرو کرده‌اید") {
+      const { data } = await axios.post("/api/book-slot", { slotId, serviceId });
+      if (data.message === "شما قبلاً یک نوبت در این روز رزرو کرده‌اید") {
         return toast.error("شما قبلاً در این روز رزرو کرده‌اید!");
       }
       if (data.message) {
         toast.success("نوبت شما با موفقیت رزرو شد!");
-        setSlots((prev) =>
-          prev.map((slot) =>
+        setSlots(prev =>
+          prev.map(slot =>
             slot._id === slotId
               ? { ...slot, isBooked: true, bookedBy: "شما" }
               : slot
@@ -85,5 +85,5 @@ export default function useSlots() {
     }
   };
 
-  return { slots, loading, today, bookSlot };
+  return { slots, loading, selectedDay, fetchSlots, bookSlot };
 }

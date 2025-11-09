@@ -1,59 +1,81 @@
 "use client";
-
+import React from "react";
 import { useSearchParams } from "next/navigation";
-import React, { Suspense } from "react";
 import useSlots from "../CustomHook/useSlots";
 import SlotCard from "../Components/SlotsCard";
-import { Toaster } from "react-hot-toast";
 
-// 🔹 محتوای اصلی که از useSearchParams استفاده می‌کنه
-function SlotsListContent() {
-  const { slots, loading, today, bookSlot } = useSlots();
+export default function SlotsList() {
   const searchParams = useSearchParams();
+  const serviceId = searchParams.get("serviceId") || ""; // ← از query می‌گیریم
+  const { slots, loading, selectedDay, fetchSlots, bookSlot } = useSlots();
 
-  const service = searchParams.get("service");
-  const price = searchParams.get("price");
-  const serviceId = searchParams.get("serviceId")!;
+  // تاریخ فارسی برای هدر
+  const today = new Date().toLocaleDateString("fa-IR", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+  const tomorrowDate = new Date();
+  tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+  const tomorrow = tomorrowDate.toLocaleDateString("fa-IR", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
 
-  if (loading)
-    return (
-      <p className="p-4 text-white text-center">در حال بارگذاری اسلات‌ها...</p>
-    );
+  const displayDate = selectedDay === "today" ? today : tomorrow;
 
   return (
-    <div className="p-6">
-      <Toaster position="top-center" />
-      <h2 className="text-2xl font-bold text-center text-black my-8">
-        {today}
-      </h2>
+    <div className="p-6 flex flex-col items-center">
+      {/* انتخاب روز */}
+      <div className="flex justify-center gap-4 mb-4">
+        <button
+          className={`px-10 py-2 rounded-full font-semibold transition
+            ${
+              selectedDay === "today"
+                ? "bg-green-600 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          onClick={() => fetchSlots("today")}
+        >
+          امروز
+        </button>
+        <button
+          className={`px-10 py-2 rounded-full font-semibold transition
+            ${
+              selectedDay === "tomorrow"
+                ? "bg-green-600 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          onClick={() => fetchSlots("tomorrow")}
+        >
+          فردا
+        </button>
+      </div>
 
-      {/* نمایش اطلاعات سرویس انتخاب‌شده */}
-      {service && (
-        <div className="text-center mb-20 text-lg font-semibold text-green-500">
-          سرویس انتخاب‌شده : {service} — {price} تومان
+      {/* هدر تاریخ */}
+      <h2 className="text-xl font-bold mb-6">{displayDate}</h2>
+
+      {/* لیست اسلات‌ها */}
+      {loading ? (
+        <p className="text-center text-gray-500">در حال بارگذاری...</p>
+      ) : slots.length === 0 ? (
+        <p className="text-center text-gray-500">
+          اسلاتی برای این روز موجود نیست.
+        </p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {slots.filter(Boolean).map((slot, index) => (
+            <SlotCard
+              key={slot._id}
+              item={slot}
+              index={index}
+              serviceId={serviceId} // ← حالا همیشه مقدار دارد
+              onBook={bookSlot}
+            />
+          ))}
         </div>
       )}
-
-      <div className="flex flex-wrap justify-center items-center gap-15">
-        {slots.map((slot, index) => (
-          <SlotCard
-            key={slot._id}
-            item={slot}
-            index={index}
-            serviceId={serviceId}
-            onBook={bookSlot}
-          />
-        ))}
-      </div>
     </div>
-  );
-}
-
-// 🔸 کامپوننت اصلی که Suspense را اضافه می‌کند
-export default function SlotsList() {
-  return (
-    <Suspense fallback={<p className="text-center text-gray-500 mt-10">در حال بارگذاری...</p>}>
-      <SlotsListContent />
-    </Suspense>
   );
 }
