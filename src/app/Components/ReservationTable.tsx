@@ -75,7 +75,7 @@ export default function ReservationTable() {
       {/* دسکتاپ */}
       <div className="hidden md:block overflow-x-auto">
         <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-          <thead className="bg-gray-200">
+          <thead className="bg-green-200 text-black ">
             <tr>
               <th className="py-3 px-6">نام</th>
               <th className="py-3 px-6">نام خانوادگی</th>
@@ -116,7 +116,7 @@ export default function ReservationTable() {
         {reservations.map((res) => (
           <div
             key={res._id}
-            className="bg-white shadow-md rounded-lg p-4 border border-gray-200"
+            className="bg-white shadow-md rounded-lg border-b-2 border-green-600 p-4"
           >
             <div className="flex justify-between mb-2">
               <span className="font-semibold">نام:</span>

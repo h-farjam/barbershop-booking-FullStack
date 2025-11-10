@@ -7,6 +7,8 @@ import SlotCard from "../Components/SlotsCard";
 export default function SlotsList() {
   const searchParams = useSearchParams();
   const serviceId = searchParams.get("serviceId") || ""; // ← از query می‌گیریم
+  const price = searchParams.get("price");
+  const service = searchParams.get("service");
   const { slots, loading, selectedDay, fetchSlots, bookSlot } = useSlots();
 
   // تاریخ فارسی برای هدر
@@ -54,7 +56,16 @@ export default function SlotsList() {
       </div>
 
       {/* هدر تاریخ */}
-      <h2 className="text-xl font-bold mb-6">{displayDate}</h2>
+      <h2 className="text-xl font-bold mb-2">{displayDate}</h2>
+      <div className=" flex flex-col md:flex md:justify-center md:items-center my-4  justify-center items-center gap-4 ">
+        <p className="text-2xl mb-2">
+          سرویس درخواستی : <span className="text-red-600">{service}</span>
+        </p>
+        <p className="text-2xl mb-2">
+          {" "}
+          قیمت : <span className="text-red-600">{price}</span> هزار تومن
+        </p>
+      </div>
 
       {/* لیست اسلات‌ها */}
       {loading ? (
@@ -64,7 +75,7 @@ export default function SlotsList() {
           اسلاتی برای این روز موجود نیست.
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {slots.filter(Boolean).map((slot, index) => (
             <SlotCard
               key={slot._id}
