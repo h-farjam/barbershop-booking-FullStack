@@ -2,7 +2,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaArrowLeft } from "react-icons/fa";
 const phoneRegex: RegExp = /^09\d{9}$/;
@@ -21,7 +21,6 @@ export default function LoginTestPage() {
       toast.error("لطفا شماره موبایل معتبر وارد کنید ");
       return;
     }
-
     try {
       setLoading(true);
       const res = await axios.post("/api/login", { phone });
@@ -36,7 +35,15 @@ export default function LoginTestPage() {
       setLoading(false);
     }
   };
-
+  useEffect(() => {
+    const CheckLogiin = async () => {
+      const { data }: any = await axios.get("api/status");
+      if (data.loggedIn) {
+        router.push("/");
+      }
+    };
+    CheckLogiin();
+  });
   return (
     <>
       <div className="flex flex-col items-center gap-6 bg-[#ffffff] w-full md:w-1/2 p-6 text-black rounded-lg shadow-md">

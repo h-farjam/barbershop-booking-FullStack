@@ -82,7 +82,6 @@ export default function ReservationTable() {
               <th className="py-3 px-6">شماره تماس</th>
               <th className="py-3 px-6">سرویس</th>
               <th className="py-3 px-6">قیمت</th>
-              <th className="py-3 px-6">تاریخ رزرو</th>
               <th className="py-3 px-6">روز رزرو</th>
               <th className="py-3 px-6">ساعت رزرو</th>
             </tr>
@@ -102,7 +101,6 @@ export default function ReservationTable() {
                     ? `${res.serviceId.price.toLocaleString()} تومان`
                     : "-"}
                 </td>
-                <td className="py-3 px-6">{toPersianDate(res.bookedAt)}</td>
                 <td className="py-3 px-6">{toPersianDate(res.slotId?.date)}</td>
                 <td className="py-3 px-6">{res.slotId?.time || "-"}</td>
               </tr>
@@ -141,10 +139,6 @@ export default function ReservationTable() {
                   ? `${res.serviceId.price.toLocaleString()} تومان`
                   : "-"}
               </span>
-            </div>
-            <div className="flex justify-between mb-2">
-              <span className="font-semibold">تاریخ رزرو:</span>
-              <span>{toPersianDate(res.bookedAt)}</span>
             </div>
             <div className="flex justify-between mb-2">
               <span className="font-semibold">روز رزرو:</span>
