@@ -27,9 +27,9 @@ export default async function ServicesPage() {
       <div className="text-center  w-full p-5 text-white bg-[#373737]">
         <h1 className="text-2xl font-bold">صفحه خدمات</h1>
         <p className="text-lg mt-3">
-          خوش اومدی{" "}
-          <span className="text-blue-500 font-semibold">{token.Fname}</span>{" "}
-          عزیز ❤️
+          کاربر گرامی ({" "}
+          <span className="text-blue-500 font-semibold">{token.Fname} {token.Lname}</span> )
+          خوش اومدی ❤️
         </p>
       </div>
       <div>
