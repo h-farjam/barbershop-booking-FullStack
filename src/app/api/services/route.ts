@@ -13,7 +13,6 @@ interface IService {
 export async function GET(req: Request) {
   try {
     await ConnectDB();
-
     const { searchParams } = new URL(req.url);
     const filter = searchParams.get("filter") || "all";
 

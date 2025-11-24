@@ -1,5 +1,4 @@
 "use client";
-import React, { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import useSlots from "../CustomHook/useSlots";
 import SlotCard from "../Components/SlotsCard";

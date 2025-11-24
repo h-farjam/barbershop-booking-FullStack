@@ -1,3 +1,4 @@
+// src/app/Components/ReservationTable.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -15,43 +16,52 @@ export default function ReservationTable() {
   const [reservations, setReservations] = useState<IReservation[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // تابع گرفتن تاریخ امروز و فردا بر اساس زمان ایران
   const getTodayAndTomorrowISO = () => {
     const now = new Date();
     const iranTime = new Date(
       now.toLocaleString("en-US", { timeZone: "Asia/Tehran" })
     );
-
     const todayISO = iranTime.toISOString().split("T")[0];
-
     const tomorrow = new Date(iranTime);
     tomorrow.setDate(tomorrow.getDate() + 1);
     const tomorrowISO = tomorrow.toISOString().split("T")[0];
-
     return [todayISO, tomorrowISO];
   };
 
+  const fetchReservations = async () => {
+    try {
+      const res = await axios.get("/api/reservations");
+      const [today, tomorrow] = getTodayAndTomorrowISO();
+      const filtered = res.data.data.filter(
+        (r: IReservation) =>
+          r.slotId?.date === today || r.slotId?.date === tomorrow
+      );
+      setReservations(filtered);
+    } catch (err) {
+      console.error("❌ خطا در گرفتن رزروها:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchReservations = async () => {
-      try {
-        const res = await axios.get("/api/reservations");
-        const [today, tomorrow] = getTodayAndTomorrowISO();
-
-        // فقط رزروهای امروز و فردا
-        const filtered = res.data.data.filter(
-          (r: IReservation) =>
-            r.slotId?.date === today || r.slotId?.date === tomorrow
-        );
-
-        setReservations(filtered);
-      } catch (err) {
-        console.error("❌ خطا در گرفتن رزروها:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchReservations();
   }, []);
+//69240753c55d69fc0693457f
+  const deleteReservation = async (id: string) => {
+    try {
+      // trim کردن id قبل از ارسال
+      const cleanId = id.trim();
+      console.log("Deleting reservation id:", cleanId);
+
+      await axios.delete(`/api/reservations/${cleanId}`);
+
+      // بعد از حذف، دوباره لیست رزروها را از سرور بگیریم
+      fetchReservations();
+    } catch (err) {
+      console.error("❌ خطا در حذف رزرو:", err);
+    }
+  };
 
   if (loading)
     return (
@@ -84,6 +94,7 @@ export default function ReservationTable() {
               <th className="py-3 px-6">قیمت</th>
               <th className="py-3 px-6">روز رزرو</th>
               <th className="py-3 px-6">ساعت رزرو</th>
+              <th className="py-3 px-6">حذف</th>
             </tr>
           </thead>
           <tbody>
@@ -97,12 +108,18 @@ export default function ReservationTable() {
                 <td className="py-3 px-6">{res.userId?.phone || "-"}</td>
                 <td className="py-3 px-6">{res.serviceId?.title || "-"}</td>
                 <td className="py-3 px-6">
-                  {res.serviceId?.price
-                    ? `${res.serviceId.price.toLocaleString()} تومان`
-                    : "-"}
+                  {res.serviceId?.price?.toLocaleString() || "-"} تومان
                 </td>
                 <td className="py-3 px-6">{toPersianDate(res.slotId?.date)}</td>
                 <td className="py-3 px-6">{res.slotId?.time || "-"}</td>
+                <td className="py-3 px-6">
+                  <button
+                    onClick={() => deleteReservation(res._id)}
+                    className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 transition"
+                  >
+                    حذف
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -118,36 +135,39 @@ export default function ReservationTable() {
           >
             <div className="flex justify-between mb-2">
               <span className="font-semibold">نام:</span>
-              <span>{res.userId?.Fname || "-"}</span>
+              {res.userId?.Fname}
             </div>
             <div className="flex justify-between mb-2">
               <span className="font-semibold">نام خانوادگی:</span>
-              <span>{res.userId?.Lname || "-"}</span>
+              {res.userId?.Lname}
             </div>
             <div className="flex justify-between mb-2">
               <span className="font-semibold">شماره تماس:</span>
-              <span>{res.userId?.phone || "-"}</span>
+              {res.userId?.phone}
             </div>
             <div className="flex justify-between mb-2">
               <span className="font-semibold">سرویس:</span>
-              <span>{res.serviceId?.title || "-"}</span>
+              {res.serviceId?.title}
             </div>
             <div className="flex justify-between mb-2">
               <span className="font-semibold">قیمت:</span>
-              <span>
-                {res.serviceId?.price
-                  ? `${res.serviceId.price.toLocaleString()} تومان`
-                  : "-"}
-              </span>
+              {res.serviceId?.price?.toLocaleString()} تومان
             </div>
             <div className="flex justify-between mb-2">
               <span className="font-semibold">روز رزرو:</span>
-              <span>{toPersianDate(res.slotId?.date)}</span>
+              {toPersianDate(res.slotId?.date)}
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between mb-2">
               <span className="font-semibold">ساعت رزرو:</span>
-              <span>{res.slotId?.time || "-"}</span>
+              {res.slotId?.time}
             </div>
+
+            <button
+              onClick={() => deleteReservation(res._id)}
+              className="w-full mt-3 bg-red-500 text-white py-2 rounded hover:bg-red-600 transition"
+            >
+              حذف رزرو
+            </button>
           </div>
         ))}
       </div>

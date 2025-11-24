@@ -44,7 +44,7 @@ export default function Navbar() {
   return (
     <>
       {/* Navbar */}
-      <nav className="absolute top-1 w-full flex justify-between md:justify-start lg:justify-between gap-10 items-center p-4 z-50">
+      <nav className="absolute top-1 w-full flex justify-between md:justify-around lg:justify-between gap-10 items-center p-4 z-50">
         {/* Logo */}
         <div className="flex items-center gap-2">
           <img className="w-8 h-13" src="/icon scissors.png" alt="logo" />
@@ -54,11 +54,10 @@ export default function Navbar() {
         </div>
 
         {/* Menu (Desktop) */}
-        <div className="hidden md:flex text-white border-l shadow border-t backdrop-blur-xl p-4 rounded-3xl font-semibold">
-          <ul className="flex gap-4 lg:gap-8 text-sm md:text-base lg:text-lg">
+        <div className="hidden md:flex text-white border-l shadow border-t backdrop-blur-xl px-17 py-4 rounded-3xl font-semibold">
+          <ul className="flex gap-4 lg:gap-10 text-sm md:text-base lg:text-lg">
             <Link href={"/"}>صفحه اصلی</Link>
             <Link href={"/services"}>خدمات</Link>
-            <Link href={"/products"}>محصولات پوستی</Link>
             <Link href={"/about"}>درباره ما</Link>
           </ul>
         </div>
@@ -152,7 +151,6 @@ export default function Navbar() {
                 {[
                   { href: "/", label: "صفحه اصلی" },
                   { href: "/services", label: "خدمات" },
-                  { href: "/products", label: "محصولات پوستی" },
                   { href: "/about", label: "درباره ما" },
                 ].map((item) => (
                   <Link

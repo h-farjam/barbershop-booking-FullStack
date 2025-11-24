@@ -31,7 +31,7 @@ export default function useSlots() {
     checkStatus();
   }, [router]);
 
-  // تبدیل تاریخ YYYY-MM-DD به فارسی
+  /** تبدیل تاریخ میلادی → فارسی */
   const toPersianDate = (dateStr: string) => {
     const d = new Date(dateStr);
     return d.toLocaleDateString("fa-IR", {
@@ -41,15 +41,22 @@ export default function useSlots() {
     });
   };
 
-  // گرفتن اسلات‌ها
+  /** دریافت اسلات‌ها */
   const fetchSlots = async (day: "today" | "tomorrow" = selectedDay) => {
     try {
       setLoading(true);
+
       const { data } = await axios.get(`/api/Slots?day=${day}`);
-      setSlots(Array.isArray(data) ? data.map(slot => ({
-        ...slot,
-        date: toPersianDate(slot.date)
-      })) : []);
+
+      setSlots(
+        Array.isArray(data)
+          ? data.map(slot => ({
+              ...slot,
+              date: toPersianDate(slot.date),
+            }))
+          : []
+      );
+
       setSelectedDay(day);
     } catch (err) {
       console.error(err);
@@ -59,31 +66,37 @@ export default function useSlots() {
     }
   };
 
+  /** اجرا در بار اول */
   useEffect(() => {
     fetchSlots("today");
   }, []);
 
-  // رزرو نوبت
+  /** رزرو اسلات (فرانت و سرور همزمان آپدیت می‌شوند) */
   const bookSlot = async (slotId: string, serviceId: string) => {
     try {
-      const { data } = await axios.post("/api/book-slot", { slotId, serviceId });
+      const { data } = await axios.post("/api/book-slot", {
+        slotId,
+        serviceId,
+      });
+
       if (data.message === "شما قبلاً یک نوبت در این روز رزرو کرده‌اید") {
         return toast.error("شما قبلاً در این روز رزرو کرده‌اید!");
       }
-      if (data.message) {
-        toast.success("نوبت شما با موفقیت رزرو شد!");
-        setSlots(prev =>
-          prev.map(slot =>
-            slot._id === slotId
-              ? { ...slot, isBooked: true, bookedBy: "شما" }
-              : slot
-          )
-        );
-      }
+
+      toast.success("نوبت شما با موفقیت رزرو شد!");
+
+      // **به‌روزرسانی فوری UI**
+      setSlots(prev =>
+        prev.map(slot =>
+          slot._id === slotId
+            ? { ...slot, isBooked: true, bookedBy: "شما" }
+            : slot
+        )
+      );
     } catch (err: any) {
       toast.error(err.response?.data?.message || "خطا در رزرو نوبت");
     }
   };
 
-  return { slots, loading, selectedDay, fetchSlots, bookSlot };
+  return { slots, loading, selectedDay, fetchSlots, bookSlot, setSlots };
 }

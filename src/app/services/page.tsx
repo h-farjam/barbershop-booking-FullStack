@@ -28,8 +28,10 @@ export default async function ServicesPage() {
         <h1 className="text-2xl font-bold">صفحه خدمات</h1>
         <p className="text-lg mt-3">
           کاربر گرامی ({" "}
-          <span className="text-blue-500 font-semibold">{token.Fname} {token.Lname}</span> )
-          خوش اومدی ❤️
+          <span className="text-blue-500 font-semibold">
+            {token.Fname} {token.Lname}
+          </span>{" "}
+          ) خوش اومدی ❤️
         </p>
       </div>
       <div>
