@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Slot } from "../CustomHook/useSlots";
+import axios from "axios";
 
 interface Props {
   item: Slot;
@@ -11,6 +12,10 @@ interface Props {
 }
 
 export default function SlotCard({ item, serviceId, index, onBook }: Props) {
+  const Book = () => {
+    onBook(item._id, serviceId);
+  };
+
   return (
     <div className="relative w-80 flex flex-col rounded-2xl bg-white shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
       <div
@@ -34,7 +39,7 @@ export default function SlotCard({ item, serviceId, index, onBook }: Props) {
 
       <div className="p-5 pt-0">
         <button
-          onClick={() => onBook(item._id, serviceId)}
+          onClick={Book}
           disabled={item.isBooked}
           className={`w-full py-3 rounded-xl font-semibold text-white transition
           ${

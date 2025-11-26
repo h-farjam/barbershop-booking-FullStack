@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 interface IReservation {
   _id: string;
@@ -47,7 +48,7 @@ export default function ReservationTable() {
   useEffect(() => {
     fetchReservations();
   }, []);
-//69240753c55d69fc0693457f
+  //69240753c55d69fc0693457f
   const deleteReservation = async (id: string) => {
     try {
       // trim کردن id قبل از ارسال
@@ -55,6 +56,7 @@ export default function ReservationTable() {
       console.log("Deleting reservation id:", cleanId);
 
       await axios.delete(`/api/reservations/${cleanId}`);
+      toast.success("رزرو مورد نظر با موفقیت حذف شد ");
 
       // بعد از حذف، دوباره لیست رزروها را از سرور بگیریم
       fetchReservations();
@@ -115,7 +117,7 @@ export default function ReservationTable() {
                 <td className="py-3 px-6">
                   <button
                     onClick={() => deleteReservation(res._id)}
-                    className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 transition"
+                    className="bg-red-500 cursor-pointer text-white px-4 py-1 rounded hover:bg-red-600 transition"
                   >
                     حذف
                   </button>
@@ -164,7 +166,7 @@ export default function ReservationTable() {
 
             <button
               onClick={() => deleteReservation(res._id)}
-              className="w-full mt-3 bg-red-500 text-white py-2 rounded hover:bg-red-600 transition"
+              className="w-full cursor-pointer mt-3 bg-red-500 text-white py-2 rounded hover:bg-red-600 transition"
             >
               حذف رزرو
             </button>

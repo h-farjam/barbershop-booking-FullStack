@@ -41,6 +41,8 @@ export default function Navbar() {
     }
   };
 
+  const isAdmin = user?.phone === "09125733402";
+
   return (
     <>
       {/* Navbar */}
@@ -64,6 +66,7 @@ export default function Navbar() {
 
         {/* Icons + Buttons */}
         <div className="hidden lg:flex text-white justify-center items-center gap-2 font-semibold text-sm md:text-base">
+
           {/* Telegram */}
           <span className="border border-white/40 p-2 rounded-full hover:bg-white/10 transition">
             <a
@@ -86,24 +89,36 @@ export default function Navbar() {
             </a>
           </span>
 
-          {/* User Buttons */}
+          {/* Auth Buttons */}
           {!loading &&
             (user ? (
               <>
+                {/* رزرو نوبت */}
                 <Link href="/services">
-                  <p className="w-[120px] md:w-[140px] flex justify-center items-center rounded-3xl h-[38px] md:h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black text-xs sm:text-sm md:text-base transition">
+                  <p className="w-[120px] md:w-[140px] flex justify-center items-center rounded-3xl h-[38px] md:h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black transition">
                     رزرو نوبت
                   </p>
                 </Link>
+
+                {/* Admin Dashboard Button */}
+                {isAdmin && (
+                  <Link href="/admin/dashboard">
+                    <p className="w-[120px] md:w-[140px] flex justify-center items-center rounded-3xl h-[38px] md:h-[40px] border border-blue-400 hover:bg-blue-400 hover:text-black transition">
+                      مدیریت سایت
+                    </p>
+                  </Link>
+                )}
+
+                {/* Logout */}
                 <button onClick={Logout}>
-                  <p className="w-[60px] md:w-[65px] cursor-pointer flex justify-center items-center rounded-3xl h-[38px] md:h-[40px] border border-red-500 hover:bg-red-500 hover:text-white text-xs sm:text-sm md:text-base transition">
+                  <p className="w-[60px] md:w-[65px] cursor-pointer flex justify-center items-center rounded-3xl h-[38px] md:h-[40px] border border-red-500 hover:bg-red-500 hover:text-white transition">
                     خروج
                   </p>
                 </button>
               </>
             ) : (
               <Link href="/login">
-                <p className="w-[120px] md:w-[140px] flex justify-center items-center rounded-3xl h-[38px] md:h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black text-xs sm:text-sm md:text-base transition">
+                <p className="w-[120px] md:w-[140px] flex justify-center items-center rounded-3xl h-[38px] md:h-[40px] border border-[#f8cc7f] hover:bg-[#f8cc7f] hover:text-black transition">
                   ورود به سایت
                 </p>
               </Link>
@@ -118,7 +133,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Sidebar Menu */}
+      {/* Mobile Sidebar */}
       <AnimatePresence>
         {openModal && (
           <motion.div
@@ -127,10 +142,10 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex justify-center items-start pt-10"
           >
-            {/* Blur Dark Background */}
+            {/* Blur Background */}
             <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
 
-            {/* White Menu */}
+            {/* White Panel */}
             <motion.div
               initial={{ y: "-10%", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -138,10 +153,10 @@ export default function Navbar() {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="relative w-5/6 sm:w-1/2 bg-white p-6 rounded-3xl shadow-xl flex flex-col gap-6 z-10"
             >
-              {/* Close Button */}
+              {/* Close */}
               <button
                 onClick={() => setOpenModal(false)}
-                className="self-end text-gray-500 hover:text-black hover:rotate-6 text-2xl transition"
+                className="self-end text-gray-500 hover:text-black text-2xl transition"
               >
                 <FaArrowLeft />
               </button>
@@ -157,28 +172,42 @@ export default function Navbar() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setOpenModal(false)}
-                    className="border border-gray-300 rounded-xl p-3 text-center text-gray-700 font-medium transition-all duration-300 hover:shadow hover:rounded-3xl"
+                    className="border border-gray-300 rounded-xl p-3 text-center text-gray-700 font-medium transition-all hover:shadow"
                   >
                     {item.label}
                   </Link>
                 ))}
               </div>
 
-              {/* Buttons */}
+              {/* Mobile Buttons */}
               <div className="flex flex-col gap-3 mt-4">
                 {!loading &&
                   (user ? (
                     <>
+                      {/* رزرو */}
                       <Link
                         href="/services"
                         onClick={() => setOpenModal(false)}
-                        className="bg-gray-100 px-4 py-2 rounded-xl text-center font-semibold text-green-600 transition hover:bg-gray-200"
+                        className="bg-gray-100 px-4 py-2 rounded-xl text-center font-semibold text-green-600 hover:bg-gray-200"
                       >
                         رزرو نوبت
                       </Link>
+
+                      {/* Admin Button (mobile) */}
+                      {isAdmin && (
+                        <Link
+                          href="/admin/dashboard"
+                          onClick={() => setOpenModal(false)}
+                          className="bg-blue-100 px-4 py-2 rounded-xl text-center font-semibold text-blue-700 hover:bg-blue-200"
+                        >
+                          مدیریت سایت
+                        </Link>
+                      )}
+
+                      {/* خروج */}
                       <button
                         onClick={Logout}
-                        className="bg-gray-100 cursor-pointer px-4 py-2 rounded-xl text-center font-semibold text-red-600 transition hover:bg-gray-200"
+                        className="bg-gray-100 cursor-pointer px-4 py-2 rounded-xl text-center font-semibold text-red-600 hover:bg-gray-200"
                       >
                         خروج از سایت
                       </button>
@@ -187,14 +216,15 @@ export default function Navbar() {
                     <Link
                       href="/login"
                       onClick={() => setOpenModal(false)}
-                      className="bg-gray-100 px-4 py-2 rounded-xl text-center font-semibold text-gray-800 transition hover:bg-gray-200"
+                      className="bg-gray-100 px-4 py-2 rounded-xl text-center font-semibold text-gray-800 hover:bg-gray-200"
                     >
                       ورود به سایت
                     </Link>
                   ))}
+
                 <button
                   onClick={() => setOpenModal(false)}
-                  className="bg-gray-100 cursor-pointer px-4 py-2 rounded-xl text-center font-semibold text-gray-800 transition hover:bg-gray-200"
+                  className="bg-gray-100 cursor-pointer px-4 py-2 rounded-xl text-center font-semibold text-gray-800 hover:bg-gray-200"
                 >
                   لغو
                 </button>

@@ -1,4 +1,4 @@
-// /app/api/validateToken/route.ts
+
 import { NextResponse } from "next/server";
 import { ValidateToken } from "@/utils/validationToken";
 

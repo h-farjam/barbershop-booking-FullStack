@@ -41,7 +41,7 @@ export default function SlotsList() {
           امروز
         </button>
         <button
-          className={`px-10 py-2 rounded-full font-semibold transition
+          className={`px-10 py-2 cursor-pointer rounded-full font-semibold transition
             ${
               selectedDay === "tomorrow"
                 ? "bg-green-600 text-white"

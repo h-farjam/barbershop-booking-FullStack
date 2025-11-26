@@ -50,7 +50,7 @@ export default function useSlots() {
 
       setSlots(
         Array.isArray(data)
-          ? data.map(slot => ({
+          ? data.map((slot) => ({
               ...slot,
               date: toPersianDate(slot.date),
             }))
@@ -78,6 +78,7 @@ export default function useSlots() {
         slotId,
         serviceId,
       });
+     
 
       if (data.message === "شما قبلاً یک نوبت در این روز رزرو کرده‌اید") {
         return toast.error("شما قبلاً در این روز رزرو کرده‌اید!");
@@ -86,8 +87,8 @@ export default function useSlots() {
       toast.success("نوبت شما با موفقیت رزرو شد!");
 
       // **به‌روزرسانی فوری UI**
-      setSlots(prev =>
-        prev.map(slot =>
+      setSlots((prev) =>
+        prev.map((slot) =>
           slot._id === slotId
             ? { ...slot, isBooked: true, bookedBy: "شما" }
             : slot
