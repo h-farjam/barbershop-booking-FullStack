@@ -49,7 +49,7 @@ export default function Navbar() {
       <nav className="absolute top-1 w-full flex justify-between md:justify-around lg:justify-between gap-10 items-center p-4 z-50">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img className="w-8 h-13" src="/icon scissors.png" alt="logo" />
+          <img className="w-6 h-13" src="/icon scissors.png" alt="logo" />
           <p className="font-bold text-[#f8cc7f] text-xs sm:text-sm md:text-base lg:text-lg">
             Amir Mohammad
           </p>

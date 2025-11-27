@@ -2,6 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import useSlots from "../CustomHook/useSlots";
 import SlotCard from "../Components/SlotsCard";
+import Spinner from "./Spinner";
 export default function SlotsList() {
   const searchParams = useSearchParams();
   const serviceId = searchParams.get("serviceId") || ""; // ← از query می‌گیریم
@@ -67,7 +68,7 @@ export default function SlotsList() {
 
       {/* لیست اسلات‌ها */}
       {loading ? (
-        <p className="text-center text-gray-500">در حال بارگذاری...</p>
+        <Spinner />
       ) : slots.length === 0 ? (
         <p className="text-center text-gray-500">
           اسلاتی برای این روز موجود نیست.

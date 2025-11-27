@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Slot } from "../CustomHook/useSlots";
-import axios from "axios";
 
 interface Props {
   item: Slot;
