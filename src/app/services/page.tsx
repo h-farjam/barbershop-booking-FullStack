@@ -34,11 +34,7 @@ export default async function ServicesPage() {
           ) خوش اومدی ❤️
         </p>
       </div>
-      <div>
-        <Link href={"/"}>
-          <FancyButton />
-        </Link>
-      </div>
+    
 
       <ServicesList />
     </div>

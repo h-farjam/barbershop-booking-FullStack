@@ -62,7 +62,7 @@ export default function SlotsList() {
         </p>
         <p className="text-2xl mb-2">
           {" "}
-          قیمت : <span className="text-red-600">{price}</span> هزار تومن
+          قیمت : <span className="text-red-600">{price}</span>  تومن
         </p>
       </div>
 
