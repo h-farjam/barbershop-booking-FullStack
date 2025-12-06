@@ -23,10 +23,10 @@ export default async function ServicesPage() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-10 ">
-      <div className="text-center  w-full p-5 text-white bg-[#373737]">
-        <h1 className="text-2xl font-bold">صفحه خدمات</h1>
-        <p className="text-lg mt-3">
+    <div className="flex flex-col  items-center gap-10 ">
+      <div className="text-center  w-full py-5 lg:pr-60 text-white">
+        <h1 className="text- text-gray-500 font-bold">صفحه خدمات</h1>
+        <p className="text-lg text-gray-500 mt-3">
           کاربر گرامی ({" "}
           <span className="text-blue-500 font-semibold">
             {token.Fname} {token.Lname}

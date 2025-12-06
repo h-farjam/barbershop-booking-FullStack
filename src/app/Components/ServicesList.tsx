@@ -50,7 +50,7 @@ export default function ServicesList({ initialServices }: Props) {
   return (
     <div className="w-full flex flex-col lg:flex-row lg:gap-8">
       {/* Sidebar for desktop */}
-      <aside className="hidden lg:flex lg:flex-col lg:w-64 bg-white shadow-lg p-5 h-screen fixed top-[113px] right-0 border-l border-gray-200">
+      <aside className="hidden lg:flex lg:flex-col lg:w-64 bg-white shadow-lg p-5 fixed top-[0px] right-0 h-[calc(100vh-0px)] border-l border-gray-200">
         <h2 className="text-lg font-bold mb-4 text-gray-700">فیلتر خدمات</h2>
         <div className="flex flex-col gap-3">
           {filters.map((item) => (
@@ -66,24 +66,26 @@ export default function ServicesList({ initialServices }: Props) {
               {item.label}
             </button>
           ))}
-          <div className="flex justify-center text-right items-center">
-            <Link className="mb-4 w-full text-right" href={"/"}>
-              <FancyButton />
-            </Link>
-          </div>
+        </div>
+
+        {/* Back Button at bottom */}
+        <div className="mt-4">
+          <Link href="/">
+            <FancyButton />
+          </Link>
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className="w-full py-18 lg:pr-72">
-        {/* Filters (Mobile Only) */}
-        <div className="flex flex-col items-center lg:hidden flex-wrap justify-center ">
-          <div className="mb-5">
-            <Link className="mb-4 text-right" href={"/"}>
+      <div className="w-full pb-18 lg:pr-64">
+        {/* Back Button + Filters (Mobile Only) */}
+        <div className="flex flex-col items-center lg:hidden mb-7">
+          <div className="mb-5 w-full flex justify-center">
+            <Link href={"/"}>
               <FancyButton />
             </Link>
           </div>
-          <div className=" flex gap-5 mb-7">
+          <div className="flex flex-wrap justify-center gap-5">
             {filters.map((item) => (
               <button
                 key={item.id}
@@ -99,6 +101,7 @@ export default function ServicesList({ initialServices }: Props) {
             ))}
           </div>
         </div>
+
         {loading ? (
           <main className="flex justify-center items-center min-h-[40vh]">
             <Spinner />
