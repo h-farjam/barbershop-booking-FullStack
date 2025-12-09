@@ -51,8 +51,10 @@ export default function ServicesList({ initialServices }: Props) {
     <div className="w-full flex flex-col lg:flex-row lg:gap-8">
       {/* Sidebar for desktop */}
       <aside className="hidden lg:flex lg:flex-col lg:w-64 bg-white shadow-lg p-5 fixed top-[0px] right-0 h-[calc(100vh-0px)] border-l border-gray-200">
-        <h2 className="text-lg font-bold mb-4 text-gray-700">فیلتر خدمات</h2>
-        <div className="flex flex-col gap-3">
+        <h2 className="text-lg text-center mt-2 font-bold mb-4 text-gray-700">
+          فیلتر خدمات
+        </h2>
+        <div className="flex flex-col mt-20 gap-3">
           {filters.map((item) => (
             <button
               key={item.id}
