@@ -17,7 +17,7 @@ function HeroSection1() {
     >
       {/* ---------------------- عنوان اصلی ---------------------- */}
       <motion.div
-        className="text-center md:text-right"
+        className="text-center pr-9 md:text-right"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -33,7 +33,7 @@ function HeroSection1() {
 
       {/* ---------------------- دکمه و تلگرام ---------------------- */}
       <motion.div
-        className="flex flex-wrap justify-center md:justify-start items-center gap-6"
+        className="flex flex-wrap pr-9 justify-center md:justify-start items-center gap-6"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4 }}

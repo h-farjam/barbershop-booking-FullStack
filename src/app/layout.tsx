@@ -19,7 +19,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <Toaster />
+      <Toaster position="top-center" />
       <html className="w-full" dir="rtl" lang="fa">
         <body className={`${vazirmatn.className} antialiased`}>{children}</body>
       </html>

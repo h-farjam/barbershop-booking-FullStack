@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { toast, Toaster } from "react-hot-toast";
 
 interface CommentType {
   _id: string;
@@ -15,14 +16,45 @@ export default function Comment() {
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // فرم
   const [name, setName] = useState("");
   const [text, setText] = useState("");
-
-  // نام کاربر لاگین شده
   const [userName, setUserName] = useState("");
 
-  // fetch comments
+  // --------------------- کلمات ممنوع ---------------------
+  const badWords = [
+    "کصکش",
+    "کیری",
+    "کیر",
+    "کص",
+    "کون",
+    "جاکش",
+    "آشغال",
+    "نفهم",
+    "بی شعور",
+    "مادرقوه",
+    "مادرجنده",
+    "بی ناموس",
+    "احمق",
+    "گاو",
+    "کونکش",
+    "زنا زاده",
+    "زنا",
+  ];
+
+  const normalize = (text: string) => {
+    return text
+      .replace(/[\u200c\s\-_.,+*/\\|~!@#$%^&()]+/g, "")
+      .replace(/ـ+/g, "")
+      .replace(/[ٌٍَُِّْٰٖ]+/g, "")
+      .toLowerCase();
+  };
+
+  const containsBadWord = (text: string) => {
+    const normalized = normalize(text);
+    return badWords.some((bw) => normalized.includes(normalize(bw)));
+  };
+  // --------------------------------------------------------
+
   useEffect(() => {
     async function fetchComments() {
       try {
@@ -38,42 +70,41 @@ export default function Comment() {
     fetchComments();
   }, []);
 
-  // fetch logged-in user info
   useEffect(() => {
     async function fetchUser() {
       try {
         const res = await fetch("/api/status");
         const data = await res.json();
-
         if (data.loggedIn && data.user) {
           const fullName = `${data.user.Fname} ${data.user.Lname}`;
           setUserName(fullName);
-          setName(fullName); // پر کردن اتوماتیک
+          setName(fullName);
         }
       } catch (error) {
         console.error("Failed to fetch user:", error);
       }
     }
-
     fetchUser();
   }, []);
 
-  // اسلایدر بعدی
   const nextComment = () => {
     setCurrentIndex((prev) => (prev + 1) % comments.length);
   };
 
-  // اسلایدر قبلی
   const prevComment = () => {
     setCurrentIndex((prev) => (prev === 0 ? comments.length - 1 : prev - 1));
   };
 
-  // ارسال کامنت جدید
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!name.trim() || !text.trim()) {
-      alert("لطفاً همه فیلدها را پر کنید.");
+      toast.error("لطفاً همه فیلدها را پر کنید.");
+      return;
+    }
+
+    if (containsBadWord(text)) {
+      toast.error("از کلمات غیرمجاز استفاده کردید!");
       return;
     }
 
@@ -90,19 +121,15 @@ export default function Comment() {
     });
 
     if (!res.ok) {
-      alert("خطا در ارسال نظر");
+      toast.error("خطا در ارسال نظر");
       return;
     }
 
     const saved = await res.json();
-
-    // افزودن به UI بدون رفرش
     setComments((prev) => [saved, ...prev]);
     setCurrentIndex(0);
 
-    // خالی کردن فرم (اگر کاربر لاگین نبود)
     if (!userName) setName("");
-
     setText("");
   };
 
@@ -112,75 +139,55 @@ export default function Comment() {
     );
   }
 
-  if (comments.length === 0) {
-    return (
-      <div className="flex flex-col items-center">
-        <p className="text-white text-center my-10">هیچ نظری ثبت نشده است.</p>
-
-        {/* فرم */}
-        <FormSection
-          name={name}
-          text={text}
-          setName={setName}
-          setText={setText}
-          handleSubmit={handleSubmit}
-          disabledName={Boolean(userName)}
-        />
-      </div>
-    );
-  }
-
   const comment = comments[currentIndex];
 
   return (
     <div className="w-full px-4 sm:px-6 md:px-10 flex flex-col items-center">
-      {/* عنوان */}
+      <Toaster position="top-center" />
+
       <h1 className="text-2xl sm:text-3xl md:text-4xl text-center my-6 sm:my-10 font-bold">
         نظرات
       </h1>
 
-      {/* کارت کامنت + اسلایدر */}
-      <div className="relative w-full flex mb-10 justify-center items-center">
-        <div className="bg-[#1E1F1C] w-full sm:w-[90%] md:w-2/3 p-6 md:p-8 rounded-xl shadow-lg">
-          <div className="flex flex-col sm:flex-row justify-between gap-4 items-center mb-4">
-            <div className="text-white flex flex-col items-center sm:items-start gap-1">
-              <p className="text-lg sm:text-xl md:text-2xl font-bold">
-                {comment.name}
-              </p>
-              <p className="text-xs sm:text-sm md:text-base">
-                <span className="text-[#ffde91]">تاریخ</span> : {comment.date}
-              </p>
+      {comments.length > 0 && (
+        <div className="relative w-full flex mb-10 justify-center items-center">
+          <div className="bg-[#1E1F1C] w-full sm:w-[90%] md:w-2/3 p-6 md:p-8 rounded-xl shadow-lg">
+            <div className="flex flex-col sm:flex-row justify-between gap-4 items-center mb-4">
+              <div className="text-white flex flex-col items-center sm:items-start gap-1">
+                <p className="text-lg sm:text-xl md:text-2xl font-bold">
+                  {comment.name}
+                </p>
+                <p className="text-xs sm:text-sm md:text-base">
+                  <span className="text-[#ffde91]">تاریخ</span> : {comment.date}
+                </p>
+              </div>
+              <img
+                src="/quote-up.png"
+                alt="quote"
+                className="w-6 sm:w-8 md:w-10"
+              />
             </div>
-            <img
-              src="/quote-up.png"
-              alt="quote"
-              className="w-6 sm:w-8 md:w-10"
-            />
+            <p className="text-center text-white text-sm sm:text-base md:text-lg leading-relaxed">
+              {comment.text}
+            </p>
           </div>
 
-          <p className="text-center text-white text-sm sm:text-base md:text-lg leading-relaxed">
-            {comment.text}
-          </p>
+          <button
+            onClick={prevComment}
+            className="absolute left-[8px] sm:left-[-30px] bg-[#00000033] p-3 rounded-full hover:bg-[#00000055] transition text-white"
+          >
+            <FaAngleLeft size={22} />
+          </button>
+
+          <button
+            onClick={nextComment}
+            className="absolute right-[8px] sm:right-[-30px] bg-[#00000033] p-3 rounded-full hover:bg-[#00000055] transition text-white"
+          >
+            <FaAngleRight size={22} />
+          </button>
         </div>
+      )}
 
-        {/* دکمه قبلی */}
-        <button
-          onClick={prevComment}
-          className="absolute left-[8px] sm:left-[-30px] bg-[#00000033] p-3 rounded-full hover:bg-[#00000055] transition text-white"
-        >
-          <FaAngleLeft size={22} />
-        </button>
-
-        {/* دکمه بعدی */}
-        <button
-          onClick={nextComment}
-          className="absolute right-[8px] sm:right-[-30px] bg-[#00000033] p-3 rounded-full hover:bg-[#00000055] transition text-white"
-        >
-          <FaAngleRight size={22} />
-        </button>
-      </div>
-
-      {/* فرم ثبت نظر */}
       <FormSection
         name={name}
         text={text}
@@ -193,7 +200,6 @@ export default function Comment() {
   );
 }
 
-// کامپوننت فرم
 function FormSection({
   name,
   text,

@@ -9,7 +9,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
 const phoneRegex: RegExp = /^09\d{9}$/;
-const persianRegex: RegExp = /^[\u0600-\u06FF\s]+$/; // فقط حروف فارسی
+const persianRegex: RegExp = /^[\u0600-\u06FF\s]+$/;
 
 export default function RegisterTestPage() {
   const router = useRouter();
@@ -71,131 +71,138 @@ export default function RegisterTestPage() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 bg-white w-full md:w-1/2 p-6 text-black rounded-lg shadow-md">
-      {/* لوگو */}
-      <div className="flex items-center justify-center gap-2">
-        <img className="w-8 invert h-13" src="/icon scissors.png" alt="logo" />
-        <p className="font-bold text-[#f8cc7f] text-sm md:text-base">
-          Amir Mohammad
-        </p>
-      </div>
-
-      <h1 className="font-bold text-[20px]">ثبت نام در سایت</h1>
-
-      {/* فرم */}
-      <div className="flex flex-col gap-4 w-full">
-        {/* نام */}
-        <div className="flex flex-col gap-1">
-          <input
-            type="text"
-            placeholder="نام خود را وارد کنید"
-            value={Fname}
-            onChange={(e) => {
-              setFname(e.target.value);
-              setErrorFname(validateFname(e.target.value));
-            }}
-            className={`border w-full px-3 py-2 rounded-[5px] outline-none transition-colors duration-200 ${
-              errorFname
-                ? "border-red-500 focus:border-red-600"
-                : Fname.length === 0
-                ? "border-gray-300"
-                : "border-green-500 focus:border-green-600"
-            }`}
-          />
-          <AnimatePresence>
-            {errorFname && (
-              <motion.p
-                initial={{ opacity: 0, y: -5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                transition={{ duration: 0.3 }}
-                className="text-sm text-red-500"
-              >
-                {errorFname}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* نام خانوادگی */}
-        <div className="flex flex-col gap-1">
-          <input
-            type="text"
-            placeholder="نام خانوادگی خود را وارد کنید"
-            value={Lname}
-            onChange={(e) => {
-              setLname(e.target.value);
-              setErrorLname(validateLname(e.target.value));
-            }}
-            className={`border w-full px-3 py-2 rounded-[5px] outline-none transition-colors duration-200 ${
-              errorLname
-                ? "border-red-500 focus:border-red-600"
-                : Lname.length === 0
-                ? "border-gray-300"
-                : "border-green-500 focus:border-green-600"
-            }`}
-          />
-          <AnimatePresence>
-            {errorLname && (
-              <motion.p
-                initial={{ opacity: 0, y: -5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                transition={{ duration: 0.3 }}
-                className="text-sm text-red-500"
-              >
-                {errorLname}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* شماره موبایل */}
-        <input
-          type="text"
-          placeholder="شماره موبایل"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          className={`border w-full px-3 py-2 rounded-[5px] outline-none transition-colors duration-200 ${
-            phone.length === 0
-              ? "border-gray-300"
-              : phoneRegex.test(phone)
-              ? "border-green-500 focus:border-green-600"
-              : "border-red-500 focus:border-red-600"
-          }`}
-        />
-
-        {/* دکمه ثبت‌نام */}
-        <div className="w-full flex justify-center items-center flex-col gap-5 mt-6">
-          <button
-            onClick={handleRegister}
-            disabled={loading}
-            className={`w-full cursor-pointer px-4 py-2 rounded-[5px] transition ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gray-200 hover:bg-gray-300"
-            }`}
-          >
-            {loading ? "در حال ارسال..." : "ثبت‌نام"}
-          </button>
-
-          <p className="flex justify-center items-center gap-1">
-            حساب کاربری دارم!
-            <Link className="text-blue-600" href={"/login"}>
-              ورود
-            </Link>
+    <div className="w-screen h-screen flex items-center justify-center bg-gray-100 p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+        className="flex flex-col items-center gap-6 bg-white w-full max-w-md p-6 text-black rounded-xl shadow-xl"
+      >
+        {/* لوگو */}
+        <div className="flex items-center justify-center gap-2">
+          <img className="w-8 h-8 invert" src="/icon scissors.png" alt="logo" />
+          <p className="font-bold text-[#f8cc7f] text-sm md:text-base">
+            Amir Mohammad
           </p>
         </div>
-      </div>
 
-      {/* لینک بازگشت */}
-      <Link
-        href="/"
-        className="text-blue-600 flex justify-center items-center gap-2 mt-4"
-      >
-        صفحه اصلی
-        <FaArrowLeft />
-      </Link>
+        <h1 className="font-bold text-2xl">ثبت نام در سایت</h1>
+
+        {/* فرم */}
+        <div className="flex flex-col gap-4 w-full">
+          {/* نام */}
+          <div className="flex flex-col gap-1">
+            <input
+              type="text"
+              placeholder="نام خود را وارد کنید"
+              value={Fname}
+              onChange={(e) => {
+                setFname(e.target.value);
+                setErrorFname(validateFname(e.target.value));
+              }}
+              className={`border w-full px-3 py-2 rounded-md outline-none transition-colors duration-200 ${
+                errorFname
+                  ? "border-red-500 focus:border-red-600"
+                  : Fname.length === 0
+                  ? "border-gray-300"
+                  : "border-green-500 focus:border-green-600"
+              }`}
+            />
+            <AnimatePresence>
+              {errorFname && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-sm text-red-500"
+                >
+                  {errorFname}
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* نام خانوادگی */}
+          <div className="flex flex-col gap-1">
+            <input
+              type="text"
+              placeholder="نام خانوادگی خود را وارد کنید"
+              value={Lname}
+              onChange={(e) => {
+                setLname(e.target.value);
+                setErrorLname(validateLname(e.target.value));
+              }}
+              className={`border w-full px-3 py-2 rounded-md outline-none transition-colors duration-200 ${
+                errorLname
+                  ? "border-red-500 focus:border-red-600"
+                  : Lname.length === 0
+                  ? "border-gray-300"
+                  : "border-green-500 focus:border-green-600"
+              }`}
+            />
+            <AnimatePresence>
+              {errorLname && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-sm text-red-500"
+                >
+                  {errorLname}
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* شماره موبایل */}
+          <input
+            type="text"
+            placeholder="شماره موبایل"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className={`border w-full px-3 py-2 rounded-md outline-none transition-colors duration-200 ${
+              phone.length === 0
+                ? "border-gray-300"
+                : phoneRegex.test(phone)
+                ? "border-green-500 focus:border-green-600"
+                : "border-red-500 focus:border-red-600"
+            }`}
+          />
+
+          {/* دکمه ثبت‌نام */}
+          <div className="w-full flex flex-col items-center gap-4 mt-6">
+            <button
+              onClick={handleRegister}
+              disabled={loading}
+              className={`w-full px-4 py-2 rounded-md transition ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-yellow-400 hover:bg-yellow-500"
+              } font-bold text-black`}
+            >
+              {loading ? "در حال ارسال..." : "ثبت‌نام"}
+            </button>
+
+            <p className="text-sm flex justify-center items-center gap-1">
+              حساب کاربری دارم!
+              <Link className="text-blue-600 font-medium" href={"/login"}>
+                ورود
+              </Link>
+            </p>
+          </div>
+        </div>
+
+        {/* لینک بازگشت */}
+        <Link
+          href="/"
+          className="text-blue-600 flex justify-center items-center gap-2 mt-4 text-sm hover:underline"
+        >
+          صفحه اصلی
+          <FaArrowLeft />
+        </Link>
+      </motion.div>
     </div>
   );
 }
