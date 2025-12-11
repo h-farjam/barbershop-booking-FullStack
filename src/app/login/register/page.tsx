@@ -34,8 +34,7 @@ export default function RegisterTestPage() {
     if (!persianRegex.test(value))
       return "نام خانوادگی باید فقط شامل حروف فارسی باشد";
     if (value.length < 3) return "نام خانوادگی باید حداقل ۳ حرف باشد";
-    if (value.length > 15)
-      return "نام خانوادگی نمی‌تواند بیشتر از ۱۵ حرف باشد";
+    if (value.length > 15) return "نام خانوادگی نمی‌تواند بیشتر از ۱۵ حرف باشد";
     return "";
   };
 
