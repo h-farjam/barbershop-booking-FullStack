@@ -64,7 +64,9 @@ export default function AboutPage() {
       >
         <p className="text-lg mb-6 text-gray-200 text-justify">
           در مجموعه{" "}
-          <span className="text-[#f8cc7f] font-semibold">Book My Barber</span>{" "}
+          <span className="text-[#f8cc7f] mx-2 font-semibold">
+            آرایشگاه امیرمحمد{" "}
+          </span>{" "}
           تلاش ما بر این است که تجربه‌ای متفاوت از خدمات آرایشگری ارائه کنیم؛
           تجربه‌ای که بر پایه‌ی دقت، استایل، اعتماد و استانداردهای حرفه‌ای بنا
           شده است.

@@ -19,7 +19,14 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <Toaster position="top-center" />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            boxShadow: "none", // حذف سایه کامل
+          },
+        }}
+      />
       <html className="w-full" dir="rtl" lang="fa">
         <body className={`${vazirmatn.className} antialiased`}>{children}</body>
       </html>
