@@ -1,7 +1,7 @@
 // src/app/api/reservations/[id]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import ConnectDB from "@/utils/ConnectDB";
-import Reservation from "@/models/Reservation";
+import Reservation from "@/models/Reservations";
 import TimeSlot from "@/models/TimeSlot";
 
 export async function DELETE(req: NextRequest, context: { params: any }) {
