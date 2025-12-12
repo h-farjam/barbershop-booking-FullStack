@@ -4,7 +4,7 @@ import ConnectDB from "@/utils/ConnectDB";
 import "@/models/User";
 import "@/models/Service";
 import "@/models/TimeSlot";
-import Reservation from "@/models/Reservations";
+import Reservation from "@/models/Reservation";
 
 export async function GET(req: NextRequest) {
   await ConnectDB();

@@ -3,9 +3,7 @@ import { NextResponse } from "next/server";
 import ConnectDB from "@/utils/ConnectDB";
 import TimeSlot from "@/models/TimeSlot";
 import { ValidateToken } from "@/utils/validationToken";
-import Reservation from "@/models/Reservations";
-
-
+import Reservation from "@/models/Reservation";
 
 export async function POST(req: Request) {
   await ConnectDB();

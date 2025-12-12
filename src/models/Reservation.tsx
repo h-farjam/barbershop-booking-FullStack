@@ -1,4 +1,4 @@
-// src/models/Reservation.ts
+// src/models/Reservation.tsx
 import mongoose, { Schema, model, models, Document, Types } from "mongoose";
 
 export interface IReservation extends Document {

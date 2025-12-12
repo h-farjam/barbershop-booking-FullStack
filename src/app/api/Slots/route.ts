@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import ConnectDB from "@/utils/ConnectDB";
-import { generateIranTimeSlots, getIranToday } from "@/utils/generateIranSlots";
+import { generateIranTimeSlots } from "@/utils/generateIranSlots";
 import TimeSlot from "@/models/TimeSlot";
 
 function getIranDate(day: string) {
