@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import ConnectDB from "@/utils/ConnectDB";
 import Service from "@/models/Service";
 
@@ -10,7 +10,7 @@ interface IService {
   price: string;
 }
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     await ConnectDB();
     const { searchParams } = new URL(req.url);
