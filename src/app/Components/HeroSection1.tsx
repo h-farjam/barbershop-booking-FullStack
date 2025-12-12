@@ -17,7 +17,7 @@ function HeroSection1() {
     >
       {/* ---------------------- عنوان اصلی ---------------------- */}
       <motion.div
-        className="text-center pr-9 md:text-right"
+        className="text-center md:pr-9 md:text-right"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -101,7 +101,10 @@ function HeroSection1() {
       >
         <div className="flex flex-col md:flex-row justify-around items-center gap-8 text-sm sm:text-base md:text-lg lg:text-xl font-medium">
           {/* تماس */}
-          <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col gap-3 text-center">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="flex flex-col gap-3 text-center"
+          >
             <div className="flex justify-center items-center gap-2 sm:gap-3">
               <p className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl">
                 تماس
@@ -114,7 +117,10 @@ function HeroSection1() {
           </motion.div>
 
           {/* آدرس */}
-          <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col gap-3 text-center">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="flex flex-col gap-3 text-center"
+          >
             <div className="flex justify-center items-center gap-2 sm:gap-3">
               <p className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl">
                 آدرس
@@ -130,7 +136,10 @@ function HeroSection1() {
           </motion.div>
 
           {/* ساعت کاری */}
-          <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col gap-3 text-center">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="flex flex-col gap-3 text-center"
+          >
             <div className="flex justify-center items-center gap-2 sm:gap-3">
               <p className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl">
                 ساعت کاری

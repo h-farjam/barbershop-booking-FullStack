@@ -94,7 +94,7 @@ export default function LoginTestPage() {
             >
               {loading ? "در حال ارسال..." : "تایید و ادامه"}
             </button>
-            <p className="flex justify-center items-center gap-1">
+            <p className="flex flex-col md:flex md:flex-row gap-1">
               حساب کاربری ندارید?
               <span>
                 <Link className="text-blue-600" href={"/login/register"}>

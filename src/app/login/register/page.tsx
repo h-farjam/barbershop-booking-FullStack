@@ -70,7 +70,7 @@ export default function RegisterTestPage() {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="w-full md:w-1/2 h-screen flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -175,10 +175,10 @@ export default function RegisterTestPage() {
             <button
               onClick={handleRegister}
               disabled={loading}
-              className={`w-full px-4 py-2 rounded-md transition ${
+              className={`w-full px-4 py-2 rounded-md  transition ${
                 loading
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-yellow-400 hover:bg-yellow-500"
+                  : "bg-gray-100 hover:bg-gray-300"
               } font-bold text-black`}
             >
               {loading ? "در حال ارسال..." : "ثبت‌نام"}
