@@ -1,5 +1,8 @@
+// app/api/importServices/route.ts
+import { NextResponse } from "next/server";
 import ConnectDB from "@/utils/ConnectDB";
 import Service from "@/models/Service";
+
 
 const servicesData = [
   {
@@ -29,10 +32,21 @@ const servicesData = [
 ];
 
 export async function POST() {
-  await ConnectDB();
-  await Service.deleteMany({}); // اگر میخوای ابتدا خالی شود
-  await Service.insertMany(servicesData);
-  return new Response(JSON.stringify({ message: "Services imported!" }), {
-    status: 200,
-  });
+  try {
+    await ConnectDB(); // اتصال به دیتابیس لیارا
+
+    // اگر می‌خوای ابتدا کالکشن خالی شود
+    await Service.deleteMany({});
+
+    // درج همه سرویس‌ها
+    await Service.insertMany(servicesData);
+
+    return NextResponse.json({ message: "Services imported!" }, { status: 200 });
+  } catch (error) {
+    console.error("Import Services Error:", error);
+    return NextResponse.json(
+      { message: "خطا در وارد کردن سرویس‌ها" },
+      { status: 500 }
+    );
+  }
 }
