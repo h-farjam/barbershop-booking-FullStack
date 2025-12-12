@@ -23,6 +23,7 @@ const servicesData = [
     img: "https://damadbarber.com/wp-content/uploads/2020/06/img_3989-833x1024.j…",
     price: "3 میلیون",
   },
+  
   {
     title: "اصلاح کامل سر و صورت",
     subtitle: "اصلاح کامل همراه باحالت دهی",
