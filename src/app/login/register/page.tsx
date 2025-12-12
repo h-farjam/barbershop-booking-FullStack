@@ -70,7 +70,7 @@ export default function RegisterTestPage() {
   };
 
   return (
-    <div className="w-full md:w-1/2 h-screen flex items-center justify-center">
+    <div className="w-full md:mx-50  lg:mx-80  md:w-1/2 h-screen flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}

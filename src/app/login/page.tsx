@@ -46,9 +46,9 @@ export default function LoginTestPage() {
   });
   return (
     <>
-      <div className="flex flex-col items-center gap-6 bg-[#ffffff] w-full md:w-1/2 p-6 text-black rounded-lg shadow-md">
+      <div className="flex md:mx-50 mt-20 lg:mx-80 mx-4 flex-col items- justify-center gap-6 bg-[#ffffff] p-6 text-black rounded-lg shadow-md">
         {/* لوگو و نام */}
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex w-full items-center justify-center gap-2">
           <img
             className="w-8 invert h-13"
             src="/icon scissors.png"
