@@ -37,7 +37,7 @@ export default function LoginTestPage() {
   };
   useEffect(() => {
     const CheckLogiin = async () => {
-      const { data }: any = await axios.get("api/status");
+      const { data }: any = await axios.get("/api/status");
       if (data.loggedIn) {
         router.push("/");
       }
