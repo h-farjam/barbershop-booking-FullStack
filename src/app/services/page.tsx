@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import { redirect } from "next/navigation";
 import { ValidateToken } from "@/utils/validationToken";
@@ -34,7 +36,6 @@ export default async function ServicesPage() {
           ) خوش اومدی ❤️
         </p>
       </div>
-    
 
       <ServicesList />
     </div>
