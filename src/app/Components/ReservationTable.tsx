@@ -161,17 +161,28 @@ export default function AdminLayout() {
                           key={res._id}
                           className="border-b text-center hover:bg-gray-100 transition"
                         >
-                          <td className="py-3 px-6">{res.userId?.Fname || "-"}</td>
-                          <td className="py-3 px-6">{res.userId?.Lname || "-"}</td>
-                          <td className="py-3 px-6">{res.userId?.phone || "-"}</td>
-                          <td className="py-3 px-6">{res.serviceId?.title || "-"}</td>
                           <td className="py-3 px-6">
-                            {res.serviceId?.price?.toLocaleString() || "-"} تومان
+                            {res.userId?.Fname || "-"}
+                          </td>
+                          <td className="py-3 px-6">
+                            {res.userId?.Lname || "-"}
+                          </td>
+                          <td className="py-3 px-6">
+                            {res.userId?.phone || "-"}
+                          </td>
+                          <td className="py-3 px-6">
+                            {res.serviceId?.title || "-"}
+                          </td>
+                          <td className="py-3 px-6">
+                            {res.serviceId?.price?.toLocaleString() || "-"}{" "}
+                            تومان
                           </td>
                           <td className="py-3 px-6">
                             {toPersianDate(res.slotId?.date)}
                           </td>
-                          <td className="py-3 px-6">{res.slotId?.time || "-"}</td>
+                          <td className="py-3 px-6">
+                            {res.slotId?.time || "-"}
+                          </td>
                           <td className="py-3 px-6">
                             <button
                               onClick={() => deleteReservation(res._id)}

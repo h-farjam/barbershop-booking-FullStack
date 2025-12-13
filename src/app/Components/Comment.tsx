@@ -143,8 +143,6 @@ export default function Comment() {
 
   return (
     <div className="w-full px-4 sm:px-6 md:px-10 flex flex-col items-center">
-      <Toaster position="top-center" />
-
       <h1 className="text-2xl sm:text-3xl md:text-4xl text-center my-6 sm:my-10 font-bold">
         نظرات
       </h1>

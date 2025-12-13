@@ -60,7 +60,9 @@ export default function RegisterTestPage() {
 
       if (res.status === 201) {
         toast.success("ثبت‌ نام با موفقیت انجام شد");
-        router.push("/login");
+        setTimeout(() => {
+          router.push("/login");
+        }, 500); // نیم ثانیه delay کافی است
       }
     } catch (error: any) {
       toast.error(error?.response?.data?.message || "خطایی رخ داده است");
