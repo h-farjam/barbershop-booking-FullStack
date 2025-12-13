@@ -8,7 +8,7 @@ const servicesData = [
   {
     title: "اصلاح صورت",
     subtitle: "اصلاح حرفه ای صورت با جدید ترین روش ها",
-    img: "https://cdn11.bigcommerce.com/s-h7l2pcerei/product_images/uploaded_ima…",
+    img: "https://cdn11.bigcommerce.com/s-h7l2pcerei/product_images/uploaded_images/trimming-beard.jpg",
     price: 100,
   },
   {
@@ -20,14 +20,14 @@ const servicesData = [
   {
     title: "پکیج دامادی VIP",
     subtitle: "پاکسازی با بهترین مواد داخل بازار",
-    img: "https://damadbarber.com/wp-content/uploads/2020/06/img_3989-833x1024.j…",
+    img: "https://damadbarber.com/wp-content/uploads/2020/06/img_3989-833x1024.jpg",
     price: 3,
   },
   
   {
     title: "اصلاح کامل سر و صورت",
     subtitle: "اصلاح کامل همراه باحالت دهی",
-    img: "https://cafeegraphic.com/wp-content/uploads/edd/2025/07/Barbershop-pho…",
+    img: "https://cafeegraphic.com/wp-content/uploads/edd/2025/07/Barbershop-photo-041135414-Cafeegraphic.com_.jpg",
     price: 230,
   },
 ];
