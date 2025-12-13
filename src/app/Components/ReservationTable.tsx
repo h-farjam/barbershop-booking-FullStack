@@ -6,9 +6,9 @@ import toast, { Toaster } from "react-hot-toast";
 
 interface IReservation {
   _id: string;
-  userId: { Fname: string; Lname: string; phone: string };
-  serviceId: { title: string; price: number };
-  slotId: { date: string; time: string };
+  userId?: { Fname: string; Lname: string; phone: string } | null;
+  serviceId?: { title: string; price: number } | null;
+  slotId?: { date: string; time: string } | null;
   bookedAt: string;
 }
 
@@ -23,7 +23,6 @@ export default function AdminLayout() {
   const [activeTab, setActiveTab] = useState<"reservations" | "comments">(
     "reservations"
   );
-
   const [reservations, setReservations] = useState<IReservation[]>([]);
   const [comments, setComments] = useState<IComment[]>([]);
   const [loadingReservations, setLoadingReservations] = useState(true);
@@ -45,8 +44,6 @@ export default function AdminLayout() {
   const fetchComments = async () => {
     try {
       const res = await axios.get("/api/comment");
-      console.log(res);
-
       setComments(res.data || []);
     } catch (err) {
       console.error(err);
@@ -99,12 +96,13 @@ export default function AdminLayout() {
         position="top-center"
         toastOptions={{
           style: {
-            boxShadow: "none", // حذف سایه کامل
+            boxShadow: "none",
           },
         }}
       />
+
       <div className="p-6">
-        {/* دکمه های انتخاب تب */}
+        {/* تب‌ها */}
         <div className="flex justify-center gap-4 mb-6">
           <button
             onClick={() => setActiveTab("reservations")}
@@ -128,7 +126,7 @@ export default function AdminLayout() {
           </button>
         </div>
 
-        {/* محتوای وسط */}
+        {/* محتوا */}
         <div className="space-y-6">
           {/* تب رزروها */}
           {activeTab === "reservations" &&
@@ -142,7 +140,7 @@ export default function AdminLayout() {
               </p>
             ) : (
               <>
-                {/* دسکتاپ جدول */}
+                {/* دسکتاپ */}
                 <div className="hidden md:block overflow-x-auto">
                   <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
                     <thead className="bg-green-200 text-black">
@@ -163,17 +161,17 @@ export default function AdminLayout() {
                           key={res._id}
                           className="border-b text-center hover:bg-gray-100 transition"
                         >
-                          <td className="py-3 px-6">{res.userId.Fname}</td>
-                          <td className="py-3 px-6">{res.userId.Lname}</td>
-                          <td className="py-3 px-6">{res.userId.phone}</td>
-                          <td className="py-3 px-6">{res.serviceId.title}</td>
+                          <td className="py-3 px-6">{res.userId?.Fname || "-"}</td>
+                          <td className="py-3 px-6">{res.userId?.Lname || "-"}</td>
+                          <td className="py-3 px-6">{res.userId?.phone || "-"}</td>
+                          <td className="py-3 px-6">{res.serviceId?.title || "-"}</td>
                           <td className="py-3 px-6">
-                            {res.serviceId.price.toLocaleString()} تومان
+                            {res.serviceId?.price?.toLocaleString() || "-"} تومان
                           </td>
                           <td className="py-3 px-6">
                             {toPersianDate(res.slotId?.date)}
                           </td>
-                          <td className="py-3 px-6">{res.slotId?.time}</td>
+                          <td className="py-3 px-6">{res.slotId?.time || "-"}</td>
                           <td className="py-3 px-6">
                             <button
                               onClick={() => deleteReservation(res._id)}
@@ -188,7 +186,7 @@ export default function AdminLayout() {
                   </table>
                 </div>
 
-                {/* موبایل کارت‌ها */}
+                {/* موبایل */}
                 <div className="md:hidden flex flex-col gap-4">
                   {reservations.map((res) => (
                     <div
@@ -197,23 +195,23 @@ export default function AdminLayout() {
                     >
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">نام:</span>{" "}
-                        {res.userId.Fname}
+                        {res.userId?.Fname || "-"}
                       </div>
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">نام خانوادگی:</span>{" "}
-                        {res.userId.Lname}
+                        {res.userId?.Lname || "-"}
                       </div>
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">شماره تماس:</span>{" "}
-                        {res.userId.phone}
+                        {res.userId?.phone || "-"}
                       </div>
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">سرویس:</span>{" "}
-                        {res.serviceId.title}
+                        {res.serviceId?.title || "-"}
                       </div>
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">قیمت:</span>{" "}
-                        {res.serviceId.price.toLocaleString()} تومان
+                        {res.serviceId?.price?.toLocaleString() || "-"} تومان
                       </div>
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">روز رزرو:</span>{" "}
@@ -221,7 +219,7 @@ export default function AdminLayout() {
                       </div>
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">ساعت رزرو:</span>{" "}
-                        {res.slotId?.time}
+                        {res.slotId?.time || "-"}
                       </div>
                       <button
                         onClick={() => deleteReservation(res._id)}
@@ -247,7 +245,6 @@ export default function AdminLayout() {
               </p>
             ) : (
               <>
-                {/* دسکتاپ جدول */}
                 <div className="hidden md:block overflow-x-auto">
                   <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
                     <thead className="bg-green-200 text-black">
@@ -283,7 +280,6 @@ export default function AdminLayout() {
                   </table>
                 </div>
 
-                {/* موبایل کارت‌ها */}
                 <div className="md:hidden flex flex-col gap-4">
                   {comments.map((c) => (
                     <div
